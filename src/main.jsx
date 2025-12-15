@@ -8,6 +8,8 @@ import { applyMiddleware, createStore } from 'redux'
 import { thunk } from 'redux-thunk'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
 
 // Basit bir reducer (şimdilik)
 const initialState = {

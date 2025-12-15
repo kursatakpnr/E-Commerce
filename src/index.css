@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom Slick Slider Styles */
+.slick-dots li button:before {
+  color: white !important;
+  opacity: 0.5 !important;
+  font-size: 10px !important;
+}
+
+.slick-dots li.slick-active button:before {
+  color: white !important;
+  opacity: 1 !important;
+}
+
+.slick-dots li {
+  margin: 0 4px !important;
+}
