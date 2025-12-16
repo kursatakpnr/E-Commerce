@@ -18,8 +18,7 @@ const ContactPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Handle form submission
+    // TODO: Form submission işlemi
   };
 
   return (

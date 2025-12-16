@@ -1,19 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Eye, EyeOff, Loader2, ChevronDown } from 'lucide-react';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { fetchRoles } from '../store/actions/clientActions';
+import { signup } from '../mock/mockApi';
 
 const SignupPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  
+  const dispatch = useDispatch();
+  const history = useHistory();
+  
+  // Redux'tan rolleri al
+  const roles = useSelector((state) => state.client.roles);
 
-  // Mock roles data (will be fetched from API later)
-  const roles = [
-    { id: 1, code: 'customer', name: 'Customer' },
-    { id: 2, code: 'store', name: 'Store' },
-    { id: 3, code: 'admin', name: 'Admin' }
-  ];
+  // Rolleri yükle (sadece gerektiğinde)
+  useEffect(() => {
+    if (roles.length === 0) {
+      dispatch(fetchRoles());
+    }
+  }, [dispatch, roles.length]);
 
   const {
     register,
@@ -22,7 +32,7 @@ const SignupPage = () => {
     formState: { errors }
   } = useForm({
     defaultValues: {
-      role_id: '1' // Customer selected by default
+      role_id: '1' // Customer varsayılan olarak seçili
     }
   });
 
@@ -30,52 +40,62 @@ const SignupPage = () => {
   const password = watch('password');
   const isStoreRole = selectedRole === '2';
 
-  // Password validation regex
+  // Password validation regex - en az 8 karakter, büyük harf, küçük harf, rakam ve özel karakter
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   
-  // Turkish phone regex
+  // Türkiye telefon numarası regex
   const turkishPhoneRegex = /^(\+90|0)?[1-9][0-9]{9}$/;
   
-  // Tax ID regex (TXXXXVXXXXXX)
+  // Vergi numarası regex (TXXXXVXXXXXX)
   const taxIdRegex = /^T\d{4}V\d{6}$/;
   
-  // IBAN regex (Turkish IBAN)
+  // Türk IBAN regex
   const ibanRegex = /^TR\d{2}\d{4}\d{4}\d{4}\d{4}\d{4}\d{2}$/;
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     setIsLoading(true);
     
-    // Format data based on role
-    let formData;
-    if (isStoreRole) {
-      formData = {
-        name: data.name,
-        email: data.email,
-        password: data.password,
-        role_id: parseInt(data.role_id),
-        store: {
-          name: data.store_name,
-          phone: data.store_phone,
-          tax_no: data.store_tax_no,
-          bank_account: data.store_bank_account
-        }
-      };
-    } else {
-      formData = {
-        name: data.name,
-        email: data.email,
-        password: data.password,
-        role_id: parseInt(data.role_id)
-      };
-    }
+    try {
+      // Veriyi role göre formatla
+      let formData;
+      if (isStoreRole) {
+        formData = {
+          name: data.name,
+          email: data.email,
+          password: data.password,
+          role_id: parseInt(data.role_id),
+          store: {
+            name: data.store_name,
+            phone: data.store_phone,
+            tax_no: data.store_tax_no,
+            bank_account: data.store_bank_account
+          }
+        };
+      } else {
+        formData = {
+          name: data.name,
+          email: data.email,
+          password: data.password,
+          role_id: parseInt(data.role_id)
+        };
+      }
 
-    console.log('Form Data:', formData);
-    
-    // Simulate API call
-    setTimeout(() => {
+      // Mock API çağrısı
+      const response = await signup(formData);
+      
+      if (response.success) {
+        toast.success(response.message);
+        // Önceki sayfaya yönlendir
+        history.goBack();
+      } else {
+        toast.error(response.error || 'Kayıt sırasında bir hata oluştu');
+      }
+    } catch (error) {
+      console.error('Signup error:', error);
+      toast.error('Kayıt sırasında bir hata oluştu');
+    } finally {
       setIsLoading(false);
-      alert('Form submitted successfully! (Backend integration pending)');
-    }, 2000);
+    }
   };
 
   return (
@@ -84,10 +104,10 @@ const SignupPage = () => {
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-2xl md:text-3xl font-bold text-slate-800 mb-2">
-            Create Account
+            Hesap Oluştur
           </h1>
           <p className="text-gray-500">
-            Join us and start shopping today
+            Bize katılın ve alışverişe hemen başlayın
           </p>
         </div>
 
@@ -97,20 +117,20 @@ const SignupPage = () => {
             {/* Name */}
             <div>
               <label htmlFor="name" className="block text-sm font-bold text-slate-700 mb-2">
-                Name *
+                Ad Soyad *
               </label>
               <input
                 type="text"
                 id="name"
-                placeholder="Enter your name"
+                placeholder="Adınızı girin"
                 className={`w-full px-4 py-3 border rounded focus:outline-none focus:border-[#23A6F0] transition-colors ${
                   errors.name ? 'border-red-500' : 'border-gray-300'
                 }`}
                 {...register('name', {
-                  required: 'Name is required',
+                  required: 'Ad gerekli',
                   minLength: {
                     value: 3,
-                    message: 'Name must be at least 3 characters'
+                    message: 'Ad en az 3 karakter olmalı'
                   }
                 })}
               />
@@ -122,20 +142,20 @@ const SignupPage = () => {
             {/* Email */}
             <div>
               <label htmlFor="email" className="block text-sm font-bold text-slate-700 mb-2">
-                Email *
+                E-posta *
               </label>
               <input
                 type="email"
                 id="email"
-                placeholder="example@email.com"
+                placeholder="ornek@email.com"
                 className={`w-full px-4 py-3 border rounded focus:outline-none focus:border-[#23A6F0] transition-colors ${
                   errors.email ? 'border-red-500' : 'border-gray-300'
                 }`}
                 {...register('email', {
-                  required: 'Email is required',
+                  required: 'E-posta gerekli',
                   pattern: {
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: 'Invalid email address'
+                    message: 'Geçersiz e-posta adresi'
                   }
                 })}
               />
@@ -147,25 +167,25 @@ const SignupPage = () => {
             {/* Password */}
             <div>
               <label htmlFor="password" className="block text-sm font-bold text-slate-700 mb-2">
-                Password *
+                Şifre *
               </label>
               <div className="relative">
                 <input
                   type={showPassword ? 'text' : 'password'}
                   id="password"
-                  placeholder="Enter password"
+                  placeholder="Şifre girin"
                   className={`w-full px-4 py-3 border rounded focus:outline-none focus:border-[#23A6F0] transition-colors pr-12 ${
                     errors.password ? 'border-red-500' : 'border-gray-300'
                   }`}
                   {...register('password', {
-                    required: 'Password is required',
+                    required: 'Şifre gerekli',
                     minLength: {
                       value: 8,
-                      message: 'Password must be at least 8 characters'
+                      message: 'Şifre en az 8 karakter olmalı'
                     },
                     pattern: {
                       value: passwordRegex,
-                      message: 'Password must include uppercase, lowercase, number and special character'
+                      message: 'Şifre büyük harf, küçük harf, rakam ve özel karakter içermeli'
                     }
                   })}
                 />
@@ -181,26 +201,26 @@ const SignupPage = () => {
                 <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
               )}
               <p className="text-gray-400 text-xs mt-1">
-                Min 8 chars, uppercase, lowercase, number & special char
+                Min 8 karakter, büyük harf, küçük harf, rakam ve özel karakter
               </p>
             </div>
 
             {/* Confirm Password */}
             <div>
               <label htmlFor="confirmPassword" className="block text-sm font-bold text-slate-700 mb-2">
-                Confirm Password *
+                Şifre Tekrar *
               </label>
               <div className="relative">
                 <input
                   type={showConfirmPassword ? 'text' : 'password'}
                   id="confirmPassword"
-                  placeholder="Confirm password"
+                  placeholder="Şifreyi tekrar girin"
                   className={`w-full px-4 py-3 border rounded focus:outline-none focus:border-[#23A6F0] transition-colors pr-12 ${
                     errors.confirmPassword ? 'border-red-500' : 'border-gray-300'
                   }`}
                   {...register('confirmPassword', {
-                    required: 'Please confirm your password',
-                    validate: value => value === password || 'Passwords do not match'
+                    required: 'Şifre tekrarı gerekli',
+                    validate: value => value === password || 'Şifreler eşleşmiyor'
                   })}
                 />
                 <button
@@ -219,7 +239,7 @@ const SignupPage = () => {
             {/* Role Selection */}
             <div>
               <label htmlFor="role_id" className="block text-sm font-bold text-slate-700 mb-2">
-                Role *
+                Rol *
               </label>
               <div className="relative">
                 <select
@@ -228,14 +248,22 @@ const SignupPage = () => {
                     errors.role_id ? 'border-red-500' : 'border-gray-300'
                   }`}
                   {...register('role_id', {
-                    required: 'Please select a role'
+                    required: 'Rol seçimi gerekli'
                   })}
                 >
-                  {roles.map((role) => (
-                    <option key={role.id} value={role.id}>
-                      {role.name}
-                    </option>
-                  ))}
+                  {roles.length > 0 ? (
+                    roles.map((role) => (
+                      <option key={role.id} value={role.id}>
+                        {role.name}
+                      </option>
+                    ))
+                  ) : (
+                    <>
+                      <option value="1">Customer</option>
+                      <option value="2">Store</option>
+                      <option value="3">Admin</option>
+                    </>
+                  )}
                 </select>
                 <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 pointer-events-none" />
               </div>
@@ -244,28 +272,28 @@ const SignupPage = () => {
               )}
             </div>
 
-            {/* Store Fields - Only shown when Store role is selected */}
+            {/* Store Fields - Sadece Store rolü seçildiğinde göster */}
             {isStoreRole && (
               <div className="space-y-5 pt-4 border-t border-gray-200">
-                <h3 className="text-lg font-bold text-slate-800">Store Information</h3>
+                <h3 className="text-lg font-bold text-slate-800">Mağaza Bilgileri</h3>
                 
                 {/* Store Name */}
                 <div>
                   <label htmlFor="store_name" className="block text-sm font-bold text-slate-700 mb-2">
-                    Store Name *
+                    Mağaza Adı *
                   </label>
                   <input
                     type="text"
                     id="store_name"
-                    placeholder="Enter store name"
+                    placeholder="Mağaza adını girin"
                     className={`w-full px-4 py-3 border rounded focus:outline-none focus:border-[#23A6F0] transition-colors ${
                       errors.store_name ? 'border-red-500' : 'border-gray-300'
                     }`}
                     {...register('store_name', {
-                      required: isStoreRole ? 'Store name is required' : false,
+                      required: isStoreRole ? 'Mağaza adı gerekli' : false,
                       minLength: {
                         value: 3,
-                        message: 'Store name must be at least 3 characters'
+                        message: 'Mağaza adı en az 3 karakter olmalı'
                       }
                     })}
                   />
@@ -277,7 +305,7 @@ const SignupPage = () => {
                 {/* Store Phone */}
                 <div>
                   <label htmlFor="store_phone" className="block text-sm font-bold text-slate-700 mb-2">
-                    Store Phone *
+                    Mağaza Telefonu *
                   </label>
                   <input
                     type="tel"
@@ -287,10 +315,10 @@ const SignupPage = () => {
                       errors.store_phone ? 'border-red-500' : 'border-gray-300'
                     }`}
                     {...register('store_phone', {
-                      required: isStoreRole ? 'Store phone is required' : false,
+                      required: isStoreRole ? 'Mağaza telefonu gerekli' : false,
                       pattern: {
                         value: turkishPhoneRegex,
-                        message: 'Please enter a valid Turkish phone number'
+                        message: 'Geçerli bir Türkiye telefon numarası girin'
                       }
                     })}
                   />
@@ -302,7 +330,7 @@ const SignupPage = () => {
                 {/* Store Tax ID */}
                 <div>
                   <label htmlFor="store_tax_no" className="block text-sm font-bold text-slate-700 mb-2">
-                    Store Tax ID *
+                    Vergi Numarası *
                   </label>
                   <input
                     type="text"
@@ -312,23 +340,23 @@ const SignupPage = () => {
                       errors.store_tax_no ? 'border-red-500' : 'border-gray-300'
                     }`}
                     {...register('store_tax_no', {
-                      required: isStoreRole ? 'Store Tax ID is required' : false,
+                      required: isStoreRole ? 'Vergi numarası gerekli' : false,
                       pattern: {
                         value: taxIdRegex,
-                        message: 'Tax ID must match pattern TXXXXVXXXXXX'
+                        message: 'Vergi numarası TXXXXVXXXXXX formatında olmalı'
                       }
                     })}
                   />
                   {errors.store_tax_no && (
                     <p className="text-red-500 text-sm mt-1">{errors.store_tax_no.message}</p>
                   )}
-                  <p className="text-gray-400 text-xs mt-1">Format: TXXXXVXXXXXX (X = number)</p>
+                  <p className="text-gray-400 text-xs mt-1">Format: TXXXXVXXXXXX (X = rakam)</p>
                 </div>
 
                 {/* Store Bank Account (IBAN) */}
                 <div>
                   <label htmlFor="store_bank_account" className="block text-sm font-bold text-slate-700 mb-2">
-                    Store Bank Account (IBAN) *
+                    Banka Hesabı (IBAN) *
                   </label>
                   <input
                     type="text"
@@ -338,10 +366,10 @@ const SignupPage = () => {
                       errors.store_bank_account ? 'border-red-500' : 'border-gray-300'
                     }`}
                     {...register('store_bank_account', {
-                      required: isStoreRole ? 'Bank account is required' : false,
+                      required: isStoreRole ? 'Banka hesabı gerekli' : false,
                       pattern: {
                         value: ibanRegex,
-                        message: 'Please enter a valid Turkish IBAN'
+                        message: 'Geçerli bir Türk IBAN adresi girin'
                       }
                     })}
                   />
@@ -361,10 +389,10 @@ const SignupPage = () => {
               {isLoading ? (
                 <>
                   <Loader2 className="w-5 h-5 animate-spin" />
-                  Creating Account...
+                  Hesap Oluşturuluyor...
                 </>
               ) : (
-                'Sign Up'
+                'Kayıt Ol'
               )}
             </button>
           </form>
@@ -372,9 +400,9 @@ const SignupPage = () => {
           {/* Login Link */}
           <div className="text-center mt-6 pt-6 border-t border-gray-200">
             <p className="text-gray-500">
-              Already have an account?{' '}
+              Zaten hesabınız var mı?{' '}
               <Link to="/login" className="text-[#23A6F0] font-bold hover:underline">
-                Login
+                Giriş Yap
               </Link>
             </p>
           </div>

@@ -19,6 +19,10 @@ const PageContent = () => {
         <Route exact path="/shop">
           <ShopPage />
         </Route>
+        {/* Kategori route'u - shop/:categoryType/:categoryCode/:categoryId */}
+        <Route path="/shop/:gender/:categoryName/:categoryId">
+          <ShopPage />
+        </Route>
         <Route path="/product/:productId">
           <ProductDetailPage />
         </Route>
@@ -37,7 +41,6 @@ const PageContent = () => {
         <Route path="/login">
           <LoginPage />
         </Route>
-        {/* Add other routes here */}
       </Switch>
     </div>
   );

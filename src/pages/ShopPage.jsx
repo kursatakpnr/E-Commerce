@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
-import { ChevronDown, Grid, List, ChevronRight, Leaf } from 'lucide-react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { ChevronDown, Grid, List, ChevronRight, Leaf, Star } from 'lucide-react';
 import { FaAws, FaRedditAlien, FaLyft, FaStripe } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchCategories } from '../store/actions/productActions';
 import ProductCard from '../components/ProductCard';
 import card1 from '../assets/card-1.jpg';
 import card2 from '../assets/card-2.jpg';
@@ -13,6 +15,32 @@ import best4 from '../assets/best-4.jpg';
 
 const ShopPage = () => {
   const [viewMode, setViewMode] = useState('grid');
+  const dispatch = useDispatch();
+  
+  // URL parametrelerini al
+  const { gender, categoryName, categoryId } = useParams();
+  
+  // Redux'tan kategorileri al
+  const categories = useSelector((state) => state.product.categories);
+  
+  // Kategorileri fetch et
+  useEffect(() => {
+    if (categories.length === 0) {
+      dispatch(fetchCategories());
+    }
+  }, [dispatch, categories.length]);
+  
+  // Aktif kategori bilgisini bul
+  const activeCategory = useMemo(() => {
+    if (categoryId) {
+      return categories.find(cat => cat.id === parseInt(categoryId));
+    }
+    return null;
+  }, [categories, categoryId]);
+  
+  // Taze ve Paketli kategorileri
+  const tazeCategories = categories.filter(cat => cat.category_type === 'taze');
+  const paketliCategories = categories.filter(cat => cat.category_type === 'paketli' || cat.category_type === 'ev');
   
   // Sample products data - Food theme
   const products = [
@@ -30,50 +58,129 @@ const ShopPage = () => {
     { id: 12, image: best2, title: "BBQ Ribs Platter", department: "Deli & Meat", originalPrice: "$29.99", price: "$22.99" },
   ];
 
-  // Categories for the grid - Food theme
-  const categories = [
-    { id: 1, name: "FROZEN", items: 12, image: card1 },
-    { id: 2, name: "FRUITS", items: 24, image: card2 },
-    { id: 3, name: "MEAT & DELI", items: 18, image: card3 },
-    { id: 4, name: "SNACKS", items: 32, image: best4 },
-    { id: 5, name: "BEVERAGES", items: 15, image: best1 },
-  ];
-
   return (
     <div className="flex flex-col">
       {/* Breadcrumb Section */}
       <section className="bg-gray-50 py-6 px-4 md:px-8 lg:px-16 xl:px-24">
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-          <h1 className="text-slate-800 font-bold text-2xl">Shop</h1>
+          <h1 className="text-slate-800 font-bold text-2xl">
+            {activeCategory ? activeCategory.title : 'Shop'}
+          </h1>
           <nav className="flex items-center gap-2 text-sm">
             <Link to="/" className="text-slate-800 font-bold hover:text-blue-500">Home</Link>
             <ChevronRight className="w-4 h-4 text-slate-400" />
-            <span className="text-slate-400 font-bold">Shop</span>
+            <Link to="/shop" className="text-slate-800 font-bold hover:text-blue-500">Shop</Link>
+            {gender && (
+              <>
+                <ChevronRight className="w-4 h-4 text-slate-400" />
+                <span className={`font-bold ${gender === 'taze' ? 'text-green-500' : 'text-orange-500'}`}>
+                  {gender === 'taze' ? '🥬 Taze Gıda' : '📦 Paketli'}
+                </span>
+              </>
+            )}
+            {activeCategory && (
+              <>
+                <ChevronRight className="w-4 h-4 text-slate-400" />
+                <span className="text-slate-400 font-bold">{activeCategory.title}</span>
+              </>
+            )}
           </nav>
         </div>
       </section>
 
-      {/* Categories Section */}
-      <section className="py-8 px-4 md:px-8 lg:px-16 xl:px-24 bg-gray-100">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-          {categories.map((category) => (
-            <div 
-              key={category.id} 
-              className="relative h-48 md:h-64 rounded-lg overflow-hidden group cursor-pointer"
-            >
-              <img 
-                src={category.image} 
-                alt={category.name} 
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-              />
-              <div className="absolute inset-0 bg-black/30 flex flex-col items-center justify-center text-white">
-                <h3 className="font-bold text-lg">{category.name}</h3>
-                <p className="text-sm">{category.items} Items</p>
+      {/* Category Header (if category selected) */}
+      {activeCategory && (
+        <section className="relative h-48 md:h-64 overflow-hidden">
+          <img 
+            src={activeCategory.img} 
+            alt={activeCategory.title}
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/30 flex items-center">
+            <div className="px-4 md:px-8 lg:px-16 xl:px-24 text-white">
+              <div className={`inline-block px-3 py-1 rounded-full text-xs font-bold mb-3 ${
+                activeCategory.category_type === 'taze' ? 'bg-green-500' : 'bg-orange-500'
+              }`}>
+                {activeCategory.category_type === 'taze' ? '🥬 Taze Gıda' : '📦 Paketli'}
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold mb-2">{activeCategory.title}</h2>
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-1">
+                  <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                  <span className="font-medium">{activeCategory.rating}</span>
+                </div>
+                <span className="text-gray-300">•</span>
+                <span className="text-gray-300">{activeCategory.product_count} ürün</span>
               </div>
             </div>
-          ))}
-        </div>
-      </section>
+          </div>
+        </section>
+      )}
+
+      {/* Categories Section - Show when no category selected */}
+      {!activeCategory && (
+        <section className="py-8 px-4 md:px-8 lg:px-16 xl:px-24 bg-gray-50">
+          {/* Taze Gıda Kategorileri */}
+          <div className="mb-8">
+            <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+              <span className="w-3 h-3 bg-green-500 rounded-full"></span>
+              🥬 Taze Gıda
+            </h3>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+              {tazeCategories.map((category) => (
+                <Link 
+                  key={category.id} 
+                  to={`/shop/taze/${category.code}/${category.id}`}
+                  className="relative h-40 rounded-lg overflow-hidden group cursor-pointer"
+                >
+                  <img 
+                    src={category.img} 
+                    alt={category.title} 
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col items-center justify-end text-white p-3">
+                    <h3 className="font-bold text-sm">{category.title}</h3>
+                    <div className="flex items-center gap-1 text-xs">
+                      <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+                      <span>{category.rating}</span>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+          
+          {/* Paketli Gıda Kategorileri */}
+          <div>
+            <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+              <span className="w-3 h-3 bg-orange-500 rounded-full"></span>
+              📦 Paketli Gıda & Ev
+            </h3>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+              {paketliCategories.map((category) => (
+                <Link 
+                  key={category.id} 
+                  to={`/shop/paketli/${category.code}/${category.id}`}
+                  className="relative h-40 rounded-lg overflow-hidden group cursor-pointer"
+                >
+                  <img 
+                    src={category.img} 
+                    alt={category.title} 
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col items-center justify-end text-white p-3">
+                    <h3 className="font-bold text-sm">{category.title}</h3>
+                    <div className="flex items-center gap-1 text-xs">
+                      <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+                      <span>{category.rating}</span>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Filter Bar */}
       <section className="py-6 px-4 md:px-8 lg:px-16 xl:px-24 border-b border-gray-200">

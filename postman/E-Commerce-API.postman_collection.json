@@ -1,0 +1,240 @@
+{
+  "info": {
+    "_postman_id": "e-commerce-api-collection",
+    "name": "E-Commerce API Collection",
+    "description": "E-Commerce projesi için API endpoint'leri. NOT: Bu proje backend kullanmıyor, mock data ile çalışıyor.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://workintech-fe-ecommerce.onrender.com",
+      "type": "string",
+      "description": "API Base URL (Bu projede mock olarak kullanılıyor)"
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "description": "Kimlik doğrulama endpoint'leri",
+      "item": [
+        {
+          "name": "Get Roles",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/roles",
+              "host": ["{{baseUrl}}"],
+              "path": ["roles"]
+            },
+            "description": "Kullanıcı rollerini getirir. Mock Response: [{id: 1, code: 'customer', name: 'Customer'}, {id: 2, code: 'store', name: 'Store'}, {id: 3, code: 'admin', name: 'Admin'}]"
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "originalRequest": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{baseUrl}}/roles",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["roles"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "[\n  { \"id\": 1, \"code\": \"customer\", \"name\": \"Customer\" },\n  { \"id\": 2, \"code\": \"store\", \"name\": \"Store\" },\n  { \"id\": 3, \"code\": \"admin\", \"name\": \"Admin\" }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Signup - Customer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test Customer\",\n  \"email\": \"test@customer.com\",\n  \"password\": \"Test123!\",\n  \"role_id\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/signup",
+              "host": ["{{baseUrl}}"],
+              "path": ["signup"]
+            },
+            "description": "Yeni müşteri kaydı oluşturur. Mock olarak simüle edilir."
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "status": "Created",
+              "code": 201,
+              "body": "{\n  \"message\": \"You need to click link in email to activate your account!\"\n}"
+            },
+            {
+              "name": "Error - Duplicate Email",
+              "status": "Bad Request",
+              "code": 400,
+              "body": "{\n  \"error\": \"This email is already registered\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Signup - Store",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Store Owner\",\n  \"email\": \"store@test.com\",\n  \"password\": \"Test123!\",\n  \"role_id\": 2,\n  \"store\": {\n    \"name\": \"Test Store\",\n    \"phone\": \"+905551234567\",\n    \"tax_no\": \"T1234V567890\",\n    \"bank_account\": \"TR330006100519786457841326\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/signup",
+              "host": ["{{baseUrl}}"],
+              "path": ["signup"]
+            },
+            "description": "Yeni mağaza kaydı oluşturur. Store rolü seçildiğinde ek alanlar gereklidir."
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "status": "Created",
+              "code": 201,
+              "body": "{\n  \"message\": \"You need to click link in email to activate your account!\"\n}"
+            },
+            {
+              "name": "Error - Invalid Tax ID",
+              "status": "Bad Request",
+              "code": 400,
+              "body": "{\n  \"error\": \"Invalid tax number format. Expected: TXXXXVXXXXXX\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"customer@commerce.com\",\n  \"password\": \"123456\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["login"]
+            },
+            "description": "Kullanıcı girişi yapar. Test kullanıcıları: customer@commerce.com, store@commerce.com, admin@commerce.com (Şifre: 123456)"
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"token\": \"mock-jwt-token-12345\",\n  \"user\": {\n    \"id\": 1,\n    \"name\": \"Test Customer\",\n    \"email\": \"customer@commerce.com\",\n    \"role_id\": 1,\n    \"role\": \"customer\"\n  }\n}"
+            },
+            {
+              "name": "Error - Invalid Credentials",
+              "status": "Unauthorized",
+              "code": 401,
+              "body": "{\n  \"error\": \"Invalid email or password\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Verify Token",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{token}}",
+                "description": "NOT: Bearer prefix KULLANILMIYOR! Direkt token gönderilir."
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/verify",
+              "host": ["{{baseUrl}}"],
+              "path": ["verify"]
+            },
+            "description": "Token doğrulama endpoint'i. Uygulama başlangıcında localStorage'da token varsa bu endpoint çağrılır. Authorization header'a Bearer prefix EKLENMEZ!"
+          },
+          "response": [
+            {
+              "name": "Success Response - Token Valid",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"token\": \"mock-jwt-token-renewed-12345\",\n  \"user\": {\n    \"id\": 1,\n    \"name\": \"Test Customer\",\n    \"email\": \"customer@commerce.com\",\n    \"role_id\": 1,\n    \"role\": \"customer\"\n  }\n}",
+              "description": "Token geçerliyse yeni token ve user bilgisi döner"
+            },
+            {
+              "name": "Error - Token Invalid",
+              "status": "Unauthorized",
+              "code": 401,
+              "body": "{\n  \"error\": \"Invalid or expired token\"\n}",
+              "description": "Token geçersiz veya süresi dolmuşsa"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "description": "Ürün endpoint'leri",
+      "item": [
+        {
+          "name": "Get Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/products?limit=25&offset=0",
+              "host": ["{{baseUrl}}"],
+              "path": ["products"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "25"
+                },
+                {
+                  "key": "offset",
+                  "value": "0"
+                }
+              ]
+            },
+            "description": "Ürün listesini getirir. Pagination destekler."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Categories",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/categories",
+              "host": ["{{baseUrl}}"],
+              "path": ["categories"]
+            },
+            "description": "Kategori listesini getirir."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

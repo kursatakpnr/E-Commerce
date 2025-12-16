@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
 import Slider from 'react-slick';
 import ProductCard from '../components/ProductCard';
-import { ChevronRight, ChevronLeft, Leaf, BarChart2, Calendar } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Leaf, BarChart2, Calendar, Star } from 'lucide-react';
 import { FaAws, FaRedditAlien, FaLyft, FaStripe } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchCategories } from '../store/actions/productActions';
 import headerImg from '../assets/header.jpg';
 import card1 from '../assets/card-1.jpg';
 import card2 from '../assets/card-2.jpg';
@@ -54,6 +57,23 @@ const sliderSettings = {
 };
 
 const HomePage = () => {
+  const dispatch = useDispatch();
+  const categories = useSelector((state) => state.product.categories);
+  
+  // Kategorileri fetch et
+  useEffect(() => {
+    if (categories.length === 0) {
+      dispatch(fetchCategories());
+    }
+  }, [dispatch, categories.length]);
+  
+  // En yüksek rating'e sahip 5 kategoriyi al
+  const topCategories = useMemo(() => {
+    return [...categories]
+      .sort((a, b) => b.rating - a.rating)
+      .slice(0, 5);
+  }, [categories]);
+
   return (
     <div className="flex flex-col gap-8 pb-8">
       {/* Hero Slider */}
@@ -95,6 +115,71 @@ const HomePage = () => {
              </div>
           </div>
         </Slider>
+      </section>
+
+      {/* Top 5 Categories by Rating */}
+      <section className="px-4 md:px-8 lg:px-16 xl:px-24 py-12 bg-gray-50">
+        <div className="text-center mb-8">
+          <h5 className="text-[#23A6F0] font-bold text-sm tracking-wide mb-2">TOP CATEGORIES</h5>
+          <h2 className="text-slate-800 font-bold text-2xl md:text-3xl mb-3">En Popüler Kategoriler</h2>
+          <p className="text-slate-500 text-sm max-w-md mx-auto">En çok beğenilen kategorilerimizi keşfedin</p>
+        </div>
+        
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          {topCategories.map((category, index) => (
+            <Link 
+              key={category.id}
+              to={`/shop/${category.category_type}/${category.code}/${category.id}`}
+              className="group relative rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+            >
+              {/* Category Image */}
+              <div className="aspect-[3/4] relative">
+                <img 
+                  src={category.img} 
+                  alt={category.title}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                {/* Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                
+                {/* Ranking Badge */}
+                <div className="absolute top-3 left-3 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg">
+                  <span className="font-bold text-[#23A6F0]">#{index + 1}</span>
+                </div>
+                
+                {/* Category Type Badge */}
+                <div className={`absolute top-3 right-3 px-2 py-1 rounded-full text-xs font-bold ${
+                  category.category_type === 'taze' ? 'bg-green-500 text-white' : 'bg-orange-500 text-white'
+                }`}>
+                  {category.category_type === 'taze' ? '🥬 Taze' : '📦 Paketli'}
+                </div>
+                
+                {/* Category Info */}
+                <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+                  <h3 className="font-bold text-lg mb-1">{category.title}</h3>
+                  <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1">
+                      <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                      <span className="text-sm font-medium">{category.rating}</span>
+                    </div>
+                    <span className="text-xs text-gray-300">•</span>
+                    <span className="text-xs text-gray-300">{category.product_count} ürün</span>
+                  </div>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+        
+        <div className="text-center mt-8">
+          <Link 
+            to="/shop" 
+            className="inline-flex items-center gap-2 bg-[#23A6F0] text-white font-bold py-3 px-8 rounded-md hover:bg-blue-600 transition-colors"
+          >
+            Tüm Kategorileri Gör
+            <ChevronRight className="w-5 h-5" />
+          </Link>
+        </div>
       </section>
 
       {/* Categories / Banners */}
