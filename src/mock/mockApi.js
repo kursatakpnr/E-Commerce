@@ -9,14 +9,10 @@ import {
   generateMockToken 
 } from './data';
 
-// Simüle edilmiş gecikme (gerçek API gibi davranması için)
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-
 // ============== AUTH API ==============
 
 // Rolleri getir
 export const fetchRoles = async () => {
-  await delay(500); // 500ms gecikme simülasyonu
   return {
     success: true,
     data: mockRoles
@@ -25,8 +21,6 @@ export const fetchRoles = async () => {
 
 // Kullanıcı kaydı
 export const signup = async (userData) => {
-  await delay(1000); // 1 saniye gecikme simülasyonu
-
   // Email kontrolü
   const existingUser = registeredUsers.find(u => u.email === userData.email);
   if (existingUser) {
@@ -62,8 +56,6 @@ export const signup = async (userData) => {
 
 // Kullanıcı girişi
 export const login = async (email, password) => {
-  await delay(800); // 800ms gecikme simülasyonu
-
   // Kullanıcıyı bul
   const user = registeredUsers.find(
     u => u.email === email && u.password === password
@@ -91,8 +83,6 @@ export const login = async (email, password) => {
 
 // Token doğrulama - /verify endpoint simülasyonu
 export const verifyToken = async (token) => {
-  await delay(300);
-
   // Mock token kontrolü
   if (token && token.startsWith('mock-jwt-token-')) {
     const userId = parseInt(token.split('-')[3]);
@@ -121,7 +111,6 @@ export const verifyToken = async (token) => {
 
 // Kategorileri getir
 export const fetchCategories = async () => {
-  await delay(400);
   return {
     success: true,
     data: mockCategories
@@ -130,18 +119,37 @@ export const fetchCategories = async () => {
 
 // Ürünleri getir
 export const fetchProducts = async (params = {}) => {
-  await delay(600);
-
-  const { limit = 25, offset = 0, filter = '' } = params;
+  const { limit = 4, offset = 0, filter = '', category = '', sort = '' } = params;
 
   let filteredProducts = [...mockProducts];
 
-  // Filtre uygula
+  // Kategori filtresi uygula
+  if (category) {
+    filteredProducts = filteredProducts.filter(p => 
+      p.category_id === parseInt(category)
+    );
+  }
+
+  // Metin filtresi uygula
   if (filter) {
     filteredProducts = filteredProducts.filter(p => 
       p.name.toLowerCase().includes(filter.toLowerCase()) ||
       p.description.toLowerCase().includes(filter.toLowerCase())
     );
+  }
+
+  // Sıralama uygula
+  if (sort) {
+    const [field, order] = sort.split(':');
+    filteredProducts.sort((a, b) => {
+      if (field === 'price') {
+        return order === 'asc' ? a.price - b.price : b.price - a.price;
+      }
+      if (field === 'rating') {
+        return order === 'asc' ? a.rating - b.rating : b.rating - a.rating;
+      }
+      return 0;
+    });
   }
 
   // Pagination
@@ -158,8 +166,6 @@ export const fetchProducts = async (params = {}) => {
 
 // Tek ürün getir
 export const fetchProductById = async (id) => {
-  await delay(400);
-
   const product = mockProducts.find(p => p.id === parseInt(id));
 
   if (!product) {

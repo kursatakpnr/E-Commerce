@@ -3,10 +3,10 @@ import { Play } from 'lucide-react';
 
 const AboutPage = () => {
   const stats = [
-    { value: '15K', label: 'Happy Customers' },
-    { value: '150K', label: 'Monthly Visitors' },
-    { value: '15', label: 'Countries Worldwide' },
-    { value: '100+', label: 'Top Partners' }
+    { value: '15K', label: 'Mutlu Müşteri' },
+    { value: '150K', label: 'Aylık Ziyaretçi' },
+    { value: '15', label: 'Ülke Genelinde' },
+    { value: '100+', label: 'Birinci Sınıf Partner' }
   ];
 
   return (
@@ -17,15 +17,15 @@ const AboutPage = () => {
           <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
             {/* Left Content */}
             <div className="w-full lg:w-1/2 text-center lg:text-left">
-              <p className="text-sm font-bold text-gray-500 mb-4">ABOUT COMPANY</p>
+              <p className="text-sm font-bold text-gray-500 mb-4">ŞİRKET HAKKINDA</p>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 mb-6">
-                ABOUT US
+                HAKKIMIZDA
               </h1>
               <p className="text-gray-500 text-base md:text-lg mb-8 max-w-md mx-auto lg:mx-0">
-                We know how large objects will act, but things on a small scale just do not act that way.
+                Kaliteli ve taze ürünleri en uygun fiyatlarla sizlere ulaştırıyoruz. Müşteri memnuniyeti bizim önceliğimiz.
               </p>
               <button className="bg-[#23A6F0] text-white px-8 py-4 rounded font-bold text-sm hover:bg-[#1a8cd8] transition-colors">
-                Get Quote Now
+                Teklif Alın
               </button>
             </div>
 
@@ -52,16 +52,16 @@ const AboutPage = () => {
           <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
             {/* Left Content */}
             <div className="w-full lg:w-1/2 text-center lg:text-left">
-              <p className="text-sm font-bold text-[#E74040] mb-4">Problems trying</p>
+              <p className="text-sm font-bold text-[#E74040] mb-4">Sorunları Çözüyoruz</p>
               <h2 className="text-xl md:text-2xl font-bold text-slate-800">
-                Met minim Mollie non desert Alamo est sit cliquey dolor do met sent.
+                En kaliteli ürünleri en uygun fiyatlarla sunmak için çalışıyoruz.
               </h2>
             </div>
 
             {/* Right Content */}
             <div className="w-full lg:w-1/2">
               <p className="text-gray-500 text-center lg:text-left">
-                Problems trying to resolve the conflict between the two major realms of Classical physics: Newtonian mechanics and quantum mechanics. Problems trying to resolve the conflict between the two major realms.
+                Müşterilerimizin ihtiyaçlarını anlamak ve onlara en iyi hizmeti sunmak için sürekli kendimizi geliştiriyoruz. Kalite, güvenilirlik ve müşteri memnuniyeti bizim temel değerlerimizdir.
               </p>
             </div>
           </div>
@@ -106,19 +106,19 @@ const AboutPage = () => {
         <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 xl:px-24">
           <div className="text-center mb-12">
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-800 mb-4">
-              Meet Our Team
+              Ekibimizle Tanışın
             </h2>
             <p className="text-gray-500 max-w-lg mx-auto">
-              Problems trying to resolve the conflict between the two major realms of Classical physics: Newtonian mechanics
+              Deneyimli ve uzman ekibimiz sizlere en iyi hizmeti sunmak için çalışıyor.
             </p>
           </div>
 
           {/* Team Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
             {[
-              { image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face', name: 'Username', role: 'Profession' },
-              { image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop&crop=face', name: 'Username', role: 'Profession' },
-              { image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face', name: 'Username', role: 'Profession' }
+              { image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face', name: 'Ahmet Yılmaz', role: 'Genel Müdür' },
+              { image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop&crop=face', name: 'Ayşe Demir', role: 'Pazarlama Müdürü' },
+              { image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face', name: 'Mehmet Kaya', role: 'Satış Müdürü' }
             ].map((member, index) => (
               <div key={index} className="text-center">
                 <img 
@@ -139,10 +139,10 @@ const AboutPage = () => {
         <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 xl:px-24">
           <div className="text-center mb-12">
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-800 mb-4">
-              Big Companies Are Here
+              Büyük Şirketler Bizimle
             </h2>
             <p className="text-gray-500 max-w-lg mx-auto">
-              Problems trying to resolve the conflict between the two major realms of Classical physics: Newtonian mechanics
+              Güvenilir iş ortaklarımızla birlikte size en iyi hizmeti sunuyoruz.
             </p>
           </div>
 
@@ -163,15 +163,15 @@ const AboutPage = () => {
           {/* Left - Blue Background */}
           <div className="w-full lg:w-1/2 bg-[#23A6F0] py-16 md:py-24 px-4 md:px-8 lg:px-16">
             <div className="max-w-md mx-auto lg:ml-auto lg:mr-16 text-center lg:text-left">
-              <p className="text-sm font-bold text-white mb-4">WORK WITH US</p>
+              <p className="text-sm font-bold text-white mb-4">BİZİMLE ÇALIŞIN</p>
               <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4">
-                Now Let's grow Yours
+                Şimdi Birlikte Büyüyelim
               </h2>
               <p className="text-white text-sm mb-8">
-                The gradual accumulation of information about atomic and small-scale behavior during the first quarter of the 20th
+                Kaliteli ürünler ve mükemmel hizmet anlayışımızla sizin de yanınızda olmak istiyoruz.
               </p>
               <button className="border-2 border-white text-white px-8 py-4 rounded font-bold text-sm hover:bg-white hover:text-[#23A6F0] transition-colors">
-                Button
+                Başla
               </button>
             </div>
           </div>

@@ -10,8 +10,8 @@ const TeamPage = () => {
   const teamMembers = [
     {
       id: 1,
-      name: 'Username',
-      role: 'Profession',
+      name: 'Ahmet Yılmaz',
+      role: 'Genel Müdür',
       image: member1,
       socials: {
         twitter: '#',
@@ -21,8 +21,8 @@ const TeamPage = () => {
     },
     {
       id: 2,
-      name: 'Username',
-      role: 'Profession',
+      name: 'Ayşe Demir',
+      role: 'Pazarlama Müdürü',
       image: member2,
       socials: {
         twitter: '#',
@@ -32,8 +32,8 @@ const TeamPage = () => {
     },
     {
       id: 3,
-      name: 'Username',
-      role: 'Profession',
+      name: 'Mehmet Kaya',
+      role: 'Satış Müdürü',
       image: member3,
       socials: {
         twitter: '#',
@@ -49,15 +49,15 @@ const TeamPage = () => {
       <section className="bg-white py-12 md:py-16">
         <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 xl:px-24">
           <div className="text-center">
-            <p className="text-sm font-bold text-gray-500 mb-4">WHAT WE DO</p>
+            <p className="text-sm font-bold text-gray-500 mb-4">NE YAPIYORUZ</p>
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 mb-4">
-              Innovation tailored for you
+              Size Özel İnovasyon
             </h1>
             {/* Breadcrumb */}
             <div className="flex items-center justify-center gap-2 text-sm">
-              <Link to="/" className="font-bold text-slate-800 hover:text-[#23A6F0]">Home</Link>
+              <Link to="/" className="font-bold text-slate-800 hover:text-[#23A6F0]">Ana Sayfa</Link>
               <ChevronRight className="w-4 h-4 text-gray-400" />
-              <span className="font-bold text-gray-400">Team</span>
+              <span className="font-bold text-gray-400">Ekip</span>
             </div>
           </div>
         </div>
@@ -113,10 +113,10 @@ const TeamPage = () => {
         <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 xl:px-24">
           <div className="text-center mb-12">
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-800 mb-4">
-              Meet Our Team
+              Ekibimizle Tanışın
             </h2>
             <p className="text-gray-500 max-w-lg mx-auto">
-              Problems trying to resolve the conflict between the two major realms of Classical physics: Newtonian mechanics
+              Deneyimli ve uzman ekibimiz sizlere en iyi hizmeti sunmak için çalışıyor.
             </p>
           </div>
 
@@ -179,13 +179,13 @@ const TeamPage = () => {
         <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 xl:px-24">
           <div className="text-center">
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-800 mb-4">
-              Start your 14 days free trial
+              14 Gün Ücretsiz Deneme Başlatın
             </h2>
             <p className="text-gray-500 max-w-md mx-auto mb-8">
-              Met minim Mollie non desert Alamo est sit cliquey dolor do met sent. RELIT://official website sent.
+              Kaliteli ürünlerimizi keşfedin ve alışverişin tadını çıkarın. Ücretsiz deneme süresi ile başlayın.
             </p>
             <button className="bg-[#23A6F0] text-white px-10 py-4 rounded font-bold text-sm hover:bg-[#1a8cd8] transition-colors mb-6">
-              Try it free now
+              Ücretsiz Deneyin
             </button>
             {/* Social Links */}
             <div className="flex justify-center gap-6">

@@ -1,27 +1,44 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { ChevronDown, Grid, List, ChevronRight, Leaf, Star } from 'lucide-react';
+import { ChevronDown, Grid, List, ChevronRight, Leaf, Star, Loader2, Search } from 'lucide-react';
 import { FaAws, FaRedditAlien, FaLyft, FaStripe } from 'react-icons/fa';
 import { Link, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchCategories } from '../store/actions/productActions';
+import { 
+  fetchCategories, 
+  fetchProducts, 
+  setFilter, 
+  setSort, 
+  setCategory,
+  setOffset,
+  FETCH_STATES 
+} from '../store/actions/productActions';
 import ProductCard from '../components/ProductCard';
-import card1 from '../assets/card-1.jpg';
-import card2 from '../assets/card-2.jpg';
-import card3 from '../assets/card-3.png';
-import best1 from '../assets/best-1.png';
-import best2 from '../assets/best-2.jpg';
-import best3 from '../assets/best-3.jpg';
-import best4 from '../assets/best-4.jpg';
 
 const ShopPage = () => {
   const [viewMode, setViewMode] = useState('grid');
+  const [filterInput, setFilterInput] = useState('');
+  const [sortSelect, setSortSelect] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
   const dispatch = useDispatch();
+  
+  // Sayfa başına ürün sayısı
+  const PRODUCTS_PER_PAGE = 4;
   
   // URL parametrelerini al
   const { gender, categoryName, categoryId } = useParams();
   
-  // Redux'tan kategorileri al
+  // Redux'tan state'leri al
   const categories = useSelector((state) => state.product.categories);
+  const productList = useSelector((state) => state.product.productList);
+  const total = useSelector((state) => state.product.total);
+  const fetchState = useSelector((state) => state.product.fetchState);
+  const currentFilter = useSelector((state) => state.product.filter);
+  const currentSort = useSelector((state) => state.product.sort);
+  const currentCategory = useSelector((state) => state.product.category);
+  const currentOffset = useSelector((state) => state.product.offset);
+  
+  // Toplam sayfa sayısını hesapla
+  const totalPages = Math.ceil(total / PRODUCTS_PER_PAGE);
   
   // Kategorileri fetch et
   useEffect(() => {
@@ -29,6 +46,63 @@ const ShopPage = () => {
       dispatch(fetchCategories());
     }
   }, [dispatch, categories.length]);
+
+  // URL'den categoryId değiştiğinde ürünleri yeniden getir
+  useEffect(() => {
+    const newCategoryId = categoryId || '';
+    
+    // Kategori değişmişse state'i güncelle ve ürünleri getir
+    if (newCategoryId !== currentCategory) {
+      dispatch(setCategory(newCategoryId));
+      dispatch(setOffset(0));
+      setCurrentPage(1);
+      dispatch(fetchProducts({ category: newCategoryId, offset: 0 }));
+    }
+  }, [categoryId, dispatch, currentCategory]);
+
+  // İlk yüklemede ürünleri getir (kategori yoksa)
+  useEffect(() => {
+    if (fetchState === FETCH_STATES.NOT_FETCHED && !categoryId) {
+      dispatch(fetchProducts());
+    }
+  }, [dispatch, fetchState, categoryId]);
+
+  // Filtre butonuna tıklandığında
+  const handleFilterClick = () => {
+    // Filter ve sort state'lerini güncelle
+    dispatch(setFilter(filterInput));
+    dispatch(setSort(sortSelect));
+    dispatch(setOffset(0));
+    setCurrentPage(1);
+    
+    // Yeni istek at (mevcut kategori korunarak, sayfa sıfırlanarak)
+    dispatch(fetchProducts({ 
+      filter: filterInput, 
+      sort: sortSelect,
+      category: currentCategory,
+      offset: 0
+    }));
+  };
+
+  // Sayfa değiştirme fonksiyonu
+  const handlePageChange = (page) => {
+    const newOffset = (page - 1) * PRODUCTS_PER_PAGE;
+    setCurrentPage(page);
+    dispatch(setOffset(newOffset));
+    dispatch(fetchProducts({ offset: newOffset }));
+    
+    // Sayfanın üstüne scroll
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Sıralama seçenekleri
+  const sortOptions = [
+    { value: '', label: 'Varsayılan' },
+    { value: 'price:asc', label: 'Fiyat: Düşükten Yükseğe' },
+    { value: 'price:desc', label: 'Fiyat: Yüksekten Düşüğe' },
+    { value: 'rating:asc', label: 'Puan: Düşükten Yükseğe' },
+    { value: 'rating:desc', label: 'Puan: Yüksekten Düşüğe' }
+  ];
   
   // Aktif kategori bilgisini bul
   const activeCategory = useMemo(() => {
@@ -41,22 +115,9 @@ const ShopPage = () => {
   // Taze ve Paketli kategorileri
   const tazeCategories = categories.filter(cat => cat.category_type === 'taze');
   const paketliCategories = categories.filter(cat => cat.category_type === 'paketli' || cat.category_type === 'ev');
-  
-  // Sample products data - Food theme
-  const products = [
-    { id: 1, image: card1, title: "Caramel Cone Ice Cream", department: "Frozen Desserts", originalPrice: "$8.99", price: "$5.99" },
-    { id: 2, image: card2, title: "Fresh Green Apples", department: "Fruits & Vegetables", originalPrice: "$4.99", price: "$2.99" },
-    { id: 3, image: card3, title: "Premium Smoked Ham", department: "Deli & Meat", originalPrice: "$24.99", price: "$18.99" },
-    { id: 4, image: best1, title: "Kids Water Bottle", department: "Kitchen Accessories", originalPrice: "$12.99", price: "$8.99" },
-    { id: 5, image: best2, title: "Gourmet Meat Platter", department: "Deli & Meat", originalPrice: "$32.99", price: "$24.99" },
-    { id: 6, image: best3, title: "Organic Bleach", department: "Cleaning Supplies", originalPrice: "$6.99", price: "$4.49" },
-    { id: 7, image: best4, title: "Werther's Caramel", department: "Snacks & Candy", originalPrice: "$5.99", price: "$3.99" },
-    { id: 8, image: card1, title: "Häagen-Dazs Vanilla", department: "Frozen Desserts", originalPrice: "$9.99", price: "$6.99" },
-    { id: 9, image: card2, title: "Organic Granny Smith", department: "Fruits & Vegetables", originalPrice: "$5.99", price: "$3.49" },
-    { id: 10, image: card3, title: "Honey Glazed Ham", department: "Deli & Meat", originalPrice: "$28.99", price: "$21.99" },
-    { id: 11, image: best1, title: "Whale Sippy Cup", department: "Kitchen Accessories", originalPrice: "$14.99", price: "$9.99" },
-    { id: 12, image: best2, title: "BBQ Ribs Platter", department: "Deli & Meat", originalPrice: "$29.99", price: "$22.99" },
-  ];
+
+  // Loading durumu kontrolü
+  const isLoading = fetchState === FETCH_STATES.FETCHING;
 
   return (
     <div className="flex flex-col">
@@ -67,9 +128,9 @@ const ShopPage = () => {
             {activeCategory ? activeCategory.title : 'Shop'}
           </h1>
           <nav className="flex items-center gap-2 text-sm">
-            <Link to="/" className="text-slate-800 font-bold hover:text-blue-500">Home</Link>
+            <Link to="/" className="text-slate-800 font-bold hover:text-blue-500">Ana Sayfa</Link>
             <ChevronRight className="w-4 h-4 text-slate-400" />
-            <Link to="/shop" className="text-slate-800 font-bold hover:text-blue-500">Shop</Link>
+            <Link to="/shop" className="text-slate-800 font-bold hover:text-blue-500">Mağaza</Link>
             {gender && (
               <>
                 <ChevronRight className="w-4 h-4 text-slate-400" />
@@ -186,13 +247,13 @@ const ShopPage = () => {
       <section className="py-6 px-4 md:px-8 lg:px-16 xl:px-24 border-b border-gray-200">
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
           {/* Results Count */}
-          <p className="text-slate-500 text-sm font-bold">Showing all 12 results</p>
+          <p className="text-slate-500 text-sm font-bold">Toplam {total} sonuç gösteriliyor</p>
           
           {/* View Mode & Filters */}
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center gap-4">
             {/* View Mode Toggle */}
             <div className="flex items-center gap-2">
-              <span className="text-slate-500 text-sm hidden sm:block">Views:</span>
+              <span className="text-slate-500 text-sm hidden sm:block">Görünüm:</span>
               <button 
                 onClick={() => setViewMode('grid')}
                 className={`p-2 rounded ${viewMode === 'grid' ? 'bg-gray-200' : 'hover:bg-gray-100'}`}
@@ -207,17 +268,37 @@ const ShopPage = () => {
               </button>
             </div>
 
-            {/* Sort Dropdown */}
+            {/* Filter Input */}
             <div className="relative">
-              <button className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded text-slate-600 text-sm hover:border-gray-400">
-                <span>Popularity</span>
-                <ChevronDown className="w-4 h-4" />
-              </button>
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
+              <input
+                type="text"
+                placeholder="Ürün ara..."
+                value={filterInput}
+                onChange={(e) => setFilterInput(e.target.value)}
+                className="pl-10 pr-4 py-2 border border-gray-300 rounded text-sm w-40 md:w-56 focus:outline-none focus:border-blue-500"
+              />
             </div>
 
+            {/* Sort Dropdown */}
+            <select
+              value={sortSelect}
+              onChange={(e) => setSortSelect(e.target.value)}
+              className="px-4 py-2 border border-gray-300 rounded text-slate-600 text-sm hover:border-gray-400 focus:outline-none focus:border-blue-500 cursor-pointer"
+            >
+              {sortOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+
             {/* Filter Button */}
-            <button className="bg-blue-500 text-white font-bold py-2 px-5 rounded text-sm hover:bg-blue-600 transition-colors">
-              Filter
+            <button 
+              onClick={handleFilterClick}
+              className="bg-blue-500 text-white font-bold py-2 px-5 rounded text-sm hover:bg-blue-600 transition-colors"
+            >
+              Filtrele
             </button>
           </div>
         </div>
@@ -225,45 +306,106 @@ const ShopPage = () => {
 
       {/* Products Grid */}
       <section className="py-12 px-4 md:px-8 lg:px-16 xl:px-24">
-        <div className={`grid gap-6 ${
-          viewMode === 'grid' 
-            ? 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4' 
-            : 'grid-cols-1'
-        }`}>
-          {products.map((product) => (
-            <ProductCard 
-              key={product.id}
-              id={product.id}
-              image={product.image}
-              title={product.title}
-              department={product.department}
-              originalPrice={product.originalPrice}
-              price={product.price}
-              colors={['bg-blue-500', 'bg-green-500', 'bg-orange-500', 'bg-slate-800']}
-            />
-          ))}
-        </div>
+        {/* Loading Spinner */}
+        {isLoading ? (
+          <div className="flex flex-col items-center justify-center py-20">
+            <Loader2 className="w-12 h-12 text-blue-500 animate-spin mb-4" />
+            <p className="text-slate-500 font-medium">Ürünler yükleniyor...</p>
+          </div>
+        ) : (
+          <>
+            <div className={`grid gap-6 ${
+              viewMode === 'grid' 
+                ? 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4' 
+                : 'grid-cols-1'
+            }`}>
+              {productList.map((product) => {
+                // Ürünün kategorisini bul
+                const productCategory = categories.find(cat => cat.id === product.category_id);
+                const categoryType = productCategory?.category_type === 'taze' ? 'taze' : 'paketli';
+                
+                return (
+                  <ProductCard 
+                    key={product.id}
+                    id={product.id}
+                    image={product.images?.[0]?.url || 'https://via.placeholder.com/400'}
+                    title={product.name}
+                    department={product.description}
+                    originalPrice={`₺${(product.price * 1.2).toFixed(2)}`}
+                    price={`₺${product.price.toFixed(2)}`}
+                    colors={['bg-blue-500', 'bg-green-500', 'bg-orange-500', 'bg-slate-800']}
+                    categoryId={product.category_id}
+                    gender={categoryType}
+                    categoryName={productCategory?.code}
+                  />
+                );
+              })}
+            </div>
 
-        {/* Pagination */}
-        <div className="flex justify-center mt-12">
-          <nav className="flex items-center gap-1">
-            <button className="px-4 py-2 border border-gray-300 rounded-l-lg text-slate-400 hover:bg-gray-50 text-sm font-bold">
-              First
-            </button>
-            <button className="px-4 py-2 border-t border-b border-gray-300 text-slate-600 hover:bg-gray-50 text-sm font-bold">
-              1
-            </button>
-            <button className="px-4 py-2 border border-blue-500 bg-blue-500 text-white text-sm font-bold">
-              2
-            </button>
-            <button className="px-4 py-2 border-t border-b border-gray-300 text-slate-600 hover:bg-gray-50 text-sm font-bold">
-              3
-            </button>
-            <button className="px-4 py-2 border border-gray-300 rounded-r-lg text-blue-500 hover:bg-gray-50 text-sm font-bold">
-              Next
-            </button>
-          </nav>
-        </div>
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className="flex justify-center mt-12">
+                <nav className="flex items-center gap-1">
+                  {/* İlk Sayfa */}
+                  <button 
+                    onClick={() => handlePageChange(1)}
+                    disabled={currentPage === 1}
+                    className={`px-4 py-2 border border-gray-300 rounded-l-lg text-sm font-bold transition-colors
+                      ${currentPage === 1 
+                        ? 'text-slate-300 cursor-not-allowed' 
+                        : 'text-slate-600 hover:bg-gray-50'}`}
+                  >
+                    İlk
+                  </button>
+                  
+                  {/* Sayfa Numaraları */}
+                  {(() => {
+                    const pages = [];
+                    let startPage = Math.max(1, currentPage - 2);
+                    let endPage = Math.min(totalPages, currentPage + 2);
+                    
+                    // En az 5 sayfa göster (mümkünse)
+                    if (endPage - startPage < 4) {
+                      if (startPage === 1) {
+                        endPage = Math.min(totalPages, startPage + 4);
+                      } else if (endPage === totalPages) {
+                        startPage = Math.max(1, endPage - 4);
+                      }
+                    }
+                    
+                    for (let i = startPage; i <= endPage; i++) {
+                      pages.push(
+                        <button
+                          key={i}
+                          onClick={() => handlePageChange(i)}
+                          className={`px-4 py-2 border-t border-b border-gray-300 text-sm font-bold transition-colors
+                            ${currentPage === i 
+                              ? 'bg-blue-500 text-white border-blue-500' 
+                              : 'text-slate-600 hover:bg-gray-50'}`}
+                        >
+                          {i}
+                        </button>
+                      );
+                    }
+                    return pages;
+                  })()}
+                  
+                  {/* Sonraki Sayfa */}
+                  <button 
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    className={`px-4 py-2 border border-gray-300 rounded-r-lg text-sm font-bold transition-colors
+                      ${currentPage === totalPages 
+                        ? 'text-slate-300 cursor-not-allowed' 
+                        : 'text-blue-500 hover:bg-gray-50'}`}
+                  >
+                    Sonraki
+                  </button>
+                </nav>
+              </div>
+            )}
+          </>
+        )}
       </section>
 
       {/* Brands Section */}

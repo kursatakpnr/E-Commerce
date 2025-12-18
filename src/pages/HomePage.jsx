@@ -85,15 +85,15 @@ const HomePage = () => {
              <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${headerImg})` }}></div>
              
              <div className="relative z-10 h-full flex flex-col items-center justify-center text-center gap-6 px-8">
-                <h1 className="font-bold text-4xl md:text-5xl lg:text-6xl">GROCERIES DELIVERY</h1>
+                <h1 className="font-bold text-4xl md:text-5xl lg:text-6xl">MARKET TESLİMATI</h1>
                 <div className="flex items-center gap-2">
                   <span className="w-16 md:w-24 h-px bg-white/50"></span>
                   <span className="text-blue-400">✦</span>
                   <span className="w-16 md:w-24 h-px bg-white/50"></span>
                 </div>
-                <p className="text-base md:text-lg max-w-md">We know how large objects will act, but things on a small scale just do not act that way.</p>
+                <p className="text-base md:text-lg max-w-md">Taze ve kaliteli ürünleri kapınıza kadar getiriyoruz. Hızlı teslimat, uygun fiyatlar.</p>
                 <button className="bg-blue-500 text-white font-bold py-3 px-10 rounded-md hover:bg-blue-600 transition-colors mt-2">
-                    Start Now
+                    Hemen Başla
                 </button>
              </div>
           </div>
@@ -102,15 +102,15 @@ const HomePage = () => {
              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1974&auto=format&fit=crop')] bg-cover bg-center"></div>
              <div className="absolute inset-0 bg-green-700/60"></div>
              <div className="relative z-10 h-full flex flex-col items-center justify-center text-center gap-6 px-8">
-                <h1 className="font-bold text-4xl md:text-5xl lg:text-6xl">VEGETABLES & FRUITS</h1>
+                <h1 className="font-bold text-4xl md:text-5xl lg:text-6xl">SEBZE & MEYVE</h1>
                 <div className="flex items-center gap-2">
                   <span className="w-16 md:w-24 h-px bg-white/50"></span>
                   <span className="text-blue-400">✦</span>
                   <span className="w-16 md:w-24 h-px bg-white/50"></span>
                 </div>
-                <p className="text-base md:text-lg max-w-md">Fresh from the farm to your door.</p>
+                <p className="text-base md:text-lg max-w-md">Çiftlikten sofraya taze ürünler.</p>
                 <button className="bg-blue-500 text-white font-bold py-3 px-10 rounded-md hover:bg-blue-600 transition-colors mt-2">
-                    Order Now
+                    Sipariş Ver
                 </button>
              </div>
           </div>
@@ -120,7 +120,7 @@ const HomePage = () => {
       {/* Top 5 Categories by Rating */}
       <section className="px-4 md:px-8 lg:px-16 xl:px-24 py-12 bg-gray-50">
         <div className="text-center mb-8">
-          <h5 className="text-[#23A6F0] font-bold text-sm tracking-wide mb-2">TOP CATEGORIES</h5>
+          <h5 className="text-[#23A6F0] font-bold text-sm tracking-wide mb-2">EN İYİ KATEGORİLER</h5>
           <h2 className="text-slate-800 font-bold text-2xl md:text-3xl mb-3">En Popüler Kategoriler</h2>
           <p className="text-slate-500 text-sm max-w-md mx-auto">En çok beğenilen kategorilerimizi keşfedin</p>
         </div>
@@ -188,9 +188,9 @@ const HomePage = () => {
             {/* Card 1 */}
             <div className="bg-white flex-1 flex justify-between items-center shadow-sm border border-gray-100 rounded-lg overflow-hidden">
                 <div className="pl-4 sm:pl-8 py-6 sm:py-8 flex flex-col gap-2 items-start text-left">
-                    <h5 className="text-red-500 font-bold text-xs sm:text-sm">Your Space</h5>
-                    <h2 className="text-slate-800 font-bold text-xl sm:text-2xl">Unique Life</h2>
-                    <a href="#" className="text-slate-800 font-bold text-xs sm:text-sm mt-2">Explore Items</a>
+                    <h5 className="text-red-500 font-bold text-xs sm:text-sm">Sizin Alanınız</h5>
+                    <h2 className="text-slate-800 font-bold text-xl sm:text-2xl">Benzersiz Yaşam</h2>
+                    <a href="#" className="text-slate-800 font-bold text-xs sm:text-sm mt-2">Ürünleri Keşfet</a>
                 </div>
                 <div className="w-1/2 h-full flex items-end justify-end">
                     <img src={card1} alt="Ice Cream" className="max-h-32 sm:max-h-48 object-contain" />
@@ -199,20 +199,20 @@ const HomePage = () => {
             {/* Card 2 */}
             <div className="bg-white flex-1 flex justify-between items-center shadow-sm border border-gray-100 rounded-lg overflow-hidden">
                 <div className="pl-4 sm:pl-8 py-6 sm:py-8 flex flex-col gap-2 items-start text-left">
-                    <h5 className="text-slate-400 font-bold text-xs sm:text-sm">Ends Today</h5>
-                    <h2 className="text-slate-800 font-bold text-xl sm:text-2xl">Elements Style</h2>
-                    <a href="#" className="text-slate-800 font-bold text-xs sm:text-sm mt-2">Explore Items</a>
+                    <h5 className="text-slate-400 font-bold text-xs sm:text-sm">Bugün Bitiyor</h5>
+                    <h2 className="text-slate-800 font-bold text-xl sm:text-2xl">Taze Ürünler</h2>
+                    <a href="#" className="text-slate-800 font-bold text-xs sm:text-sm mt-2">Ürünleri Keşfet</a>
                 </div>
                 <div className="w-1/2 h-full flex items-end justify-end">
-                    <img src={card2} alt="Apples" className="max-h-32 sm:max-h-48 object-contain" />
+                    <img src={card2} alt="Elmalar" className="max-h-32 sm:max-h-48 object-contain" />
                 </div>
             </div>
              {/* Card 3 */}
              <div className="bg-white flex-1 flex justify-between items-center shadow-sm border border-gray-100 rounded-lg overflow-hidden">
                 <div className="pl-4 sm:pl-8 py-6 sm:py-8 flex flex-col gap-2 items-start text-left">
-                    <h5 className="text-slate-400 font-bold text-xs sm:text-sm">Ends Today</h5>
-                    <h2 className="text-slate-800 font-bold text-xl sm:text-2xl">Elements Style</h2>
-                    <a href="#" className="text-slate-800 font-bold text-xs sm:text-sm mt-2">Explore Items</a>
+                    <h5 className="text-slate-400 font-bold text-xs sm:text-sm">Bugün Bitiyor</h5>
+                    <h2 className="text-slate-800 font-bold text-xl sm:text-2xl">Lezzetli Etler</h2>
+                    <a href="#" className="text-slate-800 font-bold text-xs sm:text-sm mt-2">Ürünleri Keşfet</a>
                 </div>
                 <div className="w-1/2 h-full flex items-end justify-end">
                     <img src={card3} alt="Meat" className="max-h-32 sm:max-h-48 object-contain" />
@@ -234,8 +234,8 @@ const HomePage = () => {
               />
             </div>
             <div className="relative z-10 p-8 flex flex-col gap-2">
-              <h5 className="text-white font-bold text-sm tracking-wide">FURNITURE</h5>
-              <h2 className="text-white font-bold text-2xl">5 Items</h2>
+              <h5 className="text-white font-bold text-sm tracking-wide">MOBİLYA</h5>
+              <h2 className="text-white font-bold text-2xl">5 Ürün</h2>
             </div>
           </div>
 
@@ -244,11 +244,11 @@ const HomePage = () => {
             {/* Header with tabs and arrows */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
               <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8">
-                <h2 className="text-slate-800 font-bold text-xl">BESTSELLER PRODUCTS</h2>
+                <h2 className="text-slate-800 font-bold text-xl">EN ÇOK SATANLAR</h2>
                 <nav className="flex gap-4">
-                  <button className="text-blue-500 font-medium hover:text-blue-600 text-sm sm:text-base">Men</button>
-                  <button className="text-slate-500 font-medium hover:text-slate-700 text-sm sm:text-base">Women</button>
-                  <button className="text-slate-500 font-medium hover:text-slate-700 text-sm sm:text-base">Accessories</button>
+                  <button className="text-blue-500 font-medium hover:text-blue-600 text-sm sm:text-base">Taze Gıda</button>
+                  <button className="text-slate-500 font-medium hover:text-slate-700 text-sm sm:text-base">Paketli</button>
+                  <button className="text-slate-500 font-medium hover:text-slate-700 text-sm sm:text-base">Ev Ürünleri</button>
                 </nav>
               </div>
               <div className="flex gap-2">
@@ -268,10 +268,10 @@ const HomePage = () => {
                   key={item}
                   id={item}
                   image={item <= 2 ? card1 : item <= 4 ? card2 : card3}
-                  title="Graphic Design"
-                  department="English Department"
-                  originalPrice="$16.48"
-                  price="$6.48"
+                  title="Organik Ürün"
+                  department="Taze Gıda"
+                  originalPrice="₺164.80"
+                  price="₺64.80"
                 />
               ))}
             </div>
@@ -295,9 +295,9 @@ const HomePage = () => {
             
             {/* Right Side - Most Popular Info */}
             <div className="w-full lg:w-1/2 flex flex-col items-center justify-center text-center gap-4 py-8">
-                <h2 className="text-slate-800 font-bold text-2xl">MOST POPULAR</h2>
+                <h2 className="text-slate-800 font-bold text-2xl">EN POPÜLER</h2>
                 <p className="text-slate-500 max-w-sm">
-                  We focus on ergonomics and meeting you where you work. It's only a keystroke away.
+                  Müşterilerimizin en çok tercih ettiği ürünleri sizin için seçtik. Kalite ve lezzet bir arada.
                 </p>
                 
                 {/* Product Card */}
@@ -309,10 +309,10 @@ const HomePage = () => {
                       className="w-full h-full object-contain"
                     />
                   </div>
-                  <p className="text-slate-700 font-bold text-sm">English Department</p>
+                  <p className="text-slate-700 font-bold text-sm">Taze Gıda</p>
                   <div className="flex gap-2 justify-center mt-1">
-                    <span className="text-slate-400 line-through text-sm">$16.48</span>
-                    <span className="text-green-600 font-bold text-sm">$6.48</span>
+                    <span className="text-slate-400 line-through text-sm">₺164.80</span>
+                    <span className="text-green-600 font-bold text-sm">₺64.80</span>
                   </div>
                 </div>
             </div>
@@ -323,29 +323,29 @@ const HomePage = () => {
             <div className="flex gap-4 items-start">
                 <h3 className="text-red-500 font-bold text-xl">1.</h3>
                 <div>
-                    <h4 className="text-slate-800 font-bold text-sm">Easy to use</h4>
-                    <p className="text-slate-500 text-xs">Things on a very small that you have any direct</p>
+                    <h4 className="text-slate-800 font-bold text-sm">Kolay Kullanım</h4>
+                    <p className="text-slate-500 text-xs">Kullanıcı dostu arayüz ile kolayca alışveriş yapın</p>
                 </div>
             </div>
             <div className="flex gap-4 items-start">
                 <h3 className="text-red-500 font-bold text-xl">2.</h3>
                 <div>
-                    <h4 className="text-slate-800 font-bold text-sm">Easy to use</h4>
-                    <p className="text-slate-500 text-xs">Things on a very small that you have any direct</p>
+                    <h4 className="text-slate-800 font-bold text-sm">Hızlı Teslimat</h4>
+                    <p className="text-slate-500 text-xs">Siparişleriniz aynı gün kapınıza gelsin</p>
                 </div>
             </div>
             <div className="flex gap-4 items-start">
                 <h3 className="text-red-500 font-bold text-xl">3.</h3>
                 <div>
-                    <h4 className="text-slate-800 font-bold text-sm">Easy to use</h4>
-                    <p className="text-slate-500 text-xs">Things on a very small that you have any direct</p>
+                    <h4 className="text-slate-800 font-bold text-sm">Taze Ürünler</h4>
+                    <p className="text-slate-500 text-xs">Her gün taze ürünlerle stoklarımızı yeniliyoruz</p>
                 </div>
             </div>
             <div className="flex gap-4 items-start">
                 <h3 className="text-red-500 font-bold text-xl">4.</h3>
                 <div>
-                    <h4 className="text-slate-800 font-bold text-sm">Easy to use</h4>
-                    <p className="text-slate-500 text-xs">Things on a very small that you have any direct</p>
+                    <h4 className="text-slate-800 font-bold text-sm">Güvenli Ödeme</h4>
+                    <p className="text-slate-500 text-xs">256-bit SSL ile güvenli ödeme imkanı</p>
                 </div>
             </div>
          </div>
@@ -359,11 +359,11 @@ const HomePage = () => {
             {/* Header with tabs and arrows */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
               <div className="flex flex-wrap items-center gap-4 md:gap-8">
-                <h2 className="text-slate-800 font-bold text-xl">BESTSELLER PRODUCTS</h2>
+                <h2 className="text-slate-800 font-bold text-xl">EN ÇOK SATANLAR</h2>
                 <nav className="flex gap-4">
-                  <button className="text-blue-500 font-medium hover:text-blue-600">Men</button>
-                  <button className="text-slate-500 font-medium hover:text-slate-700">Women</button>
-                  <button className="text-slate-500 font-medium hover:text-slate-700">Accessories</button>
+                  <button className="text-blue-500 font-medium hover:text-blue-600">Taze Gıda</button>
+                  <button className="text-slate-500 font-medium hover:text-slate-700">Paketli</button>
+                  <button className="text-slate-500 font-medium hover:text-slate-700">Ev Ürünleri</button>
                 </nav>
               </div>
               <div className="flex gap-2">
@@ -383,10 +383,10 @@ const HomePage = () => {
                   key={item}
                   id={item + 6}
                   image={item % 3 === 1 ? card1 : item % 3 === 2 ? card2 : card3}
-                  title="Graphic Design"
-                  department="English Department"
-                  originalPrice="$16.48"
-                  price="$6.48"
+                  title="Organik Ürün"
+                  department="Taze Gıda"
+                  originalPrice="₺164.80"
+                  price="₺64.80"
                 />
               ))}
             </div>
@@ -402,8 +402,8 @@ const HomePage = () => {
               />
             </div>
             <div className="relative z-10 p-8 flex flex-col gap-2">
-              <h5 className="text-slate-800 font-bold text-sm tracking-wide">FURNITURE</h5>
-              <h2 className="text-slate-800 font-bold text-2xl">5 Items</h2>
+              <h5 className="text-slate-800 font-bold text-sm tracking-wide">MOBİLYA</h5>
+              <h2 className="text-slate-800 font-bold text-2xl">5 Ürün</h2>
             </div>
           </div>
         </div>
@@ -414,9 +414,9 @@ const HomePage = () => {
         <div className="flex flex-col lg:flex-row gap-8 items-stretch">
           {/* Left Side - Most Popular Info */}
           <div className="w-full lg:w-1/2 flex flex-col items-center justify-center text-center gap-4 py-8 bg-gray-50 rounded-lg">
-            <h2 className="text-slate-800 font-bold text-2xl">MOST POPULAR</h2>
+            <h2 className="text-slate-800 font-bold text-2xl">EN POPÜLER</h2>
             <p className="text-slate-500 max-w-sm text-sm">
-              We focus on ergonomics and meeting you where you work. It's only a keystroke away.
+              Müşterilerimizin en çok tercih ettiği ürünleri sizin için seçtik. Kalite ve lezzet bir arada.
             </p>
             
             {/* Product Card */}
@@ -428,14 +428,14 @@ const HomePage = () => {
                   className="w-full h-full object-contain"
                 />
               </div>
-              <p className="text-slate-700 font-bold text-sm">English Department</p>
+              <p className="text-slate-700 font-bold text-sm">Taze Gıda</p>
               <div className="flex items-center justify-center gap-2 mt-1 text-slate-500 text-xs">
                 <span>📥</span>
-                <span>15 Sales</span>
+                <span>15 Satış</span>
               </div>
               <div className="flex gap-2 justify-center mt-2">
-                <span className="text-slate-400 line-through text-sm">$16.48</span>
-                <span className="text-green-600 font-bold text-sm">$6.48</span>
+                <span className="text-slate-400 line-through text-sm">₺164.80</span>
+                <span className="text-green-600 font-bold text-sm">₺64.80</span>
               </div>
               {/* Color Options */}
               <div className="flex gap-2 justify-center mt-3">
@@ -460,39 +460,39 @@ const HomePage = () => {
 
       {/* Bestseller Products - Full Width */}
       <section className="px-4 md:px-8 lg:px-16 xl:px-24 py-12">
-        <h2 className="text-slate-800 font-bold text-xl mb-8">BESTSELLER PRODUCTS</h2>
+        <h2 className="text-slate-800 font-bold text-xl mb-8">EN ÇOK SATANLAR</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
           <ProductCard 
             id={13}
             image={best1}
-            title="Graphic Design"
-            department="English Department"
-            originalPrice="$16.48"
-            price="$6.48"
+            title="Organik Ürün"
+            department="Taze Gıda"
+            originalPrice="₺164.80"
+            price="₺64.80"
           />
           <ProductCard 
             id={14}
             image={best2}
-            title="Graphic Design"
-            department="English Department"
-            originalPrice="$16.48"
-            price="$6.48"
+            title="Organik Ürün"
+            department="Taze Gıda"
+            originalPrice="₺164.80"
+            price="₺64.80"
           />
           <ProductCard 
             id={15}
             image={best3}
-            title="Graphic Design"
-            department="English Department"
-            originalPrice="$16.48"
-            price="$6.48"
+            title="Organik Ürün"
+            department="Taze Gıda"
+            originalPrice="₺164.80"
+            price="₺64.80"
           />
           <ProductCard 
             id={16}
             image={best4}
-            title="Graphic Design"
-            department="English Department"
-            originalPrice="$16.48"
-            price="$6.48"
+            title="Organik Ürün"
+            department="Taze Gıda"
+            originalPrice="₺164.80"
+            price="₺64.80"
           />
         </div>
       </section>
@@ -513,8 +513,8 @@ const HomePage = () => {
       <section className="px-4 md:px-8 lg:px-16 xl:px-24 py-16">
         {/* Section Header */}
         <div className="text-center mb-12">
-          <p className="text-blue-500 font-bold text-sm mb-2">Practice Advice</p>
-          <h2 className="text-slate-800 font-bold text-3xl md:text-4xl">Featured Posts</h2>
+          <p className="text-blue-500 font-bold text-sm mb-2">Pratik Tavsiyeler</p>
+          <h2 className="text-slate-800 font-bold text-3xl md:text-4xl">Öne Çıkan Yazılar</h2>
         </div>
 
         {/* Posts Grid */}
@@ -523,28 +523,28 @@ const HomePage = () => {
           <div className="bg-white shadow-sm rounded-lg overflow-hidden">
             <div className="relative">
               <img src={featured1} alt="Featured Post" className="w-full h-64 object-cover" />
-              <span className="absolute top-4 left-4 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded">NEW</span>
+              <span className="absolute top-4 left-4 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded">YENİ</span>
             </div>
             <div className="p-6">
               <div className="flex gap-4 text-sm mb-3">
-                <span className="text-blue-400">Google</span>
-                <span className="text-slate-600">Trending</span>
-                <span className="text-slate-600">New</span>
+                <span className="text-blue-400">Gıda</span>
+                <span className="text-slate-600">Trend</span>
+                <span className="text-slate-600">Yeni</span>
               </div>
-              <h3 className="text-slate-800 font-bold text-xl mb-3">Loudest à la Madison #1 (L'integral)</h3>
-              <p className="text-slate-500 text-sm mb-4">We focus on ergonomics and meeting you where you work. It's only a keystroke away.</p>
+              <h3 className="text-slate-800 font-bold text-xl mb-3">Sağlıklı Beslenme Rehberi #1</h3>
+              <p className="text-slate-500 text-sm mb-4">Sağlıklı yaşam için doğru beslenme ipuları. Taze ve organik ürünlerle hayatınızı değiştirin.</p>
               <div className="flex justify-between items-center text-xs text-slate-400 mb-4">
                 <div className="flex items-center gap-1">
                   <Calendar className="w-4 h-4" />
-                  <span>22 April 2021</span>
+                  <span>22 Nisan 2024</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <BarChart2 className="w-4 h-4" />
-                  <span>10 comments</span>
+                  <span>10 yorum</span>
                 </div>
               </div>
               <a href="#" className="text-slate-700 font-bold text-sm flex items-center gap-2 hover:text-blue-500">
-                Learn More <ChevronRight className="w-4 h-4" />
+                Devamını Oku <ChevronRight className="w-4 h-4" />
               </a>
             </div>
           </div>
@@ -552,29 +552,29 @@ const HomePage = () => {
           {/* Post Card 2 */}
           <div className="bg-white shadow-sm rounded-lg overflow-hidden">
             <div className="relative">
-              <img src={featured2} alt="Featured Post" className="w-full h-64 object-cover" />
-              <span className="absolute top-4 left-4 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded">NEW</span>
+              <img src={featured2} alt="Öne Çıkan Yazı" className="w-full h-64 object-cover" />
+              <span className="absolute top-4 left-4 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded">YENİ</span>
             </div>
             <div className="p-6">
               <div className="flex gap-4 text-sm mb-3">
-                <span className="text-blue-400">Google</span>
-                <span className="text-slate-600">Trending</span>
-                <span className="text-slate-600">New</span>
+                <span className="text-blue-400">Gıda</span>
+                <span className="text-slate-600">Trend</span>
+                <span className="text-slate-600">Yeni</span>
               </div>
-              <h3 className="text-slate-800 font-bold text-xl mb-3">Loudest à la Madison #1 (L'integral)</h3>
-              <p className="text-slate-500 text-sm mb-4">We focus on ergonomics and meeting you where you work. It's only a keystroke away.</p>
+              <h3 className="text-slate-800 font-bold text-xl mb-3">Organik Ürünlerin Faydaları</h3>
+              <p className="text-slate-500 text-sm mb-4">Organik ürünlerin sağlığınıza olan katkıları ve doğaya saygılı üretim yontemleri.</p>
               <div className="flex justify-between items-center text-xs text-slate-400 mb-4">
                 <div className="flex items-center gap-1">
                   <Calendar className="w-4 h-4" />
-                  <span>22 April 2021</span>
+                  <span>22 Nisan 2024</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <BarChart2 className="w-4 h-4" />
-                  <span>10 comments</span>
+                  <span>10 yorum</span>
                 </div>
               </div>
               <a href="#" className="text-slate-700 font-bold text-sm flex items-center gap-2 hover:text-blue-500">
-                Learn More <ChevronRight className="w-4 h-4" />
+                Devamını Oku <ChevronRight className="w-4 h-4" />
               </a>
             </div>
           </div>
@@ -582,29 +582,29 @@ const HomePage = () => {
           {/* Post Card 3 */}
           <div className="bg-white shadow-sm rounded-lg overflow-hidden">
             <div className="relative">
-              <img src={featured3} alt="Featured Post" className="w-full h-64 object-cover" />
-              <span className="absolute top-4 left-4 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded">NEW</span>
+              <img src={featured3} alt="Öne Çıkan Yazı" className="w-full h-64 object-cover" />
+              <span className="absolute top-4 left-4 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded">YENİ</span>
             </div>
             <div className="p-6">
               <div className="flex gap-4 text-sm mb-3">
-                <span className="text-blue-400">Google</span>
-                <span className="text-slate-600">Trending</span>
-                <span className="text-slate-600">New</span>
+                <span className="text-blue-400">Gıda</span>
+                <span className="text-slate-600">Trend</span>
+                <span className="text-slate-600">Yeni</span>
               </div>
-              <h3 className="text-slate-800 font-bold text-xl mb-3">Loudest à la Madison #1 (L'integral)</h3>
-              <p className="text-slate-500 text-sm mb-4">We focus on ergonomics and meeting you where you work. It's only a keystroke away.</p>
+              <h3 className="text-slate-800 font-bold text-xl mb-3">Mevsim Sebzeleri Rehberi</h3>
+              <p className="text-slate-500 text-sm mb-4">Her mevsimin en taze sebzelerini tanıyın ve sağlıklı tariflerle sofralarınıza taşıyın.</p>
               <div className="flex justify-between items-center text-xs text-slate-400 mb-4">
                 <div className="flex items-center gap-1">
                   <Calendar className="w-4 h-4" />
-                  <span>22 April 2021</span>
+                  <span>22 Nisan 2024</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <BarChart2 className="w-4 h-4" />
-                  <span>10 comments</span>
+                  <span>10 yorum</span>
                 </div>
               </div>
               <a href="#" className="text-slate-700 font-bold text-sm flex items-center gap-2 hover:text-blue-500">
-                Learn More <ChevronRight className="w-4 h-4" />
+                Devamını Oku <ChevronRight className="w-4 h-4" />
               </a>
             </div>
           </div>

@@ -7,12 +7,16 @@ import {
   SET_FETCH_STATE,
   SET_LIMIT,
   SET_OFFSET,
-  SET_FILTER
+  SET_FILTER,
+  SET_SORT,
+  SET_CATEGORY,
+  SET_CURRENT_PRODUCT
 } from './actionTypes';
 
 import { 
   fetchCategories as fetchCategoriesApi, 
-  fetchProducts as fetchProductsApi 
+  fetchProducts as fetchProductsApi,
+  fetchProductById as fetchProductByIdApi
 } from '../../mock/mockApi';
 
 // Fetch State sabitleri
@@ -67,6 +71,24 @@ export const setFilter = (filter) => ({
   payload: filter
 });
 
+// Sıralama ayarla
+export const setSort = (sort) => ({
+  type: SET_SORT,
+  payload: sort
+});
+
+// Kategori ayarla
+export const setCategory = (category) => ({
+  type: SET_CATEGORY,
+  payload: category
+});
+
+// Şu anki ürünü ayarla
+export const setCurrentProduct = (product) => ({
+  type: SET_CURRENT_PRODUCT,
+  payload: product
+});
+
 // ============== THUNK ACTION CREATORS ==============
 
 // Kategorileri getir
@@ -84,15 +106,24 @@ export const fetchCategories = () => async (dispatch) => {
   }
 };
 
-// Ürünleri getir
-export const fetchProducts = () => async (dispatch, getState) => {
+// Ürünleri getir - category, filter, sort, offset parametreleri ile
+export const fetchProducts = (params = {}) => async (dispatch, getState) => {
   const { product } = getState();
-  const { limit, offset, filter } = product;
+  const { limit, offset, filter, sort, category } = product;
+
+  // Parametreleri birleştir (state + gelen params)
+  const queryParams = {
+    limit: params.limit !== undefined ? params.limit : limit,
+    offset: params.offset !== undefined ? params.offset : offset,
+    filter: params.filter !== undefined ? params.filter : filter,
+    sort: params.sort !== undefined ? params.sort : sort,
+    category: params.category !== undefined ? params.category : category
+  };
 
   dispatch(setFetchState(FETCH_STATES.FETCHING));
 
   try {
-    const response = await fetchProductsApi({ limit, offset, filter });
+    const response = await fetchProductsApi(queryParams);
     
     if (response.success) {
       dispatch(setProductList(response.data.products));
@@ -104,6 +135,28 @@ export const fetchProducts = () => async (dispatch, getState) => {
     throw new Error('Failed to fetch products');
   } catch (error) {
     console.error('Error fetching products:', error);
+    dispatch(setFetchState(FETCH_STATES.FAILED));
+    throw error;
+  }
+};
+
+// Tek ürün getir - /products/:productId
+export const fetchProductById = (productId) => async (dispatch) => {
+  dispatch(setFetchState(FETCH_STATES.FETCHING));
+  dispatch(setCurrentProduct(null)); // Önceki ürünü temizle
+
+  try {
+    const response = await fetchProductByIdApi(productId);
+    
+    if (response.success) {
+      dispatch(setCurrentProduct(response.data));
+      dispatch(setFetchState(FETCH_STATES.FETCHED));
+      return response.data;
+    }
+    
+    throw new Error('Failed to fetch product');
+  } catch (error) {
+    console.error('Error fetching product:', error);
     dispatch(setFetchState(FETCH_STATES.FAILED));
     throw error;
   }

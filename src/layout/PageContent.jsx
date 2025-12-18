@@ -20,6 +20,9 @@ const PageContent = () => {
           <ShopPage />
         </Route>
         {/* Kategori route'u - shop/:categoryType/:categoryCode/:categoryId */}
+        <Route path="/shop/:gender/:categoryName/:categoryId/:productNameSlug/:productId">
+          <ProductDetailPage />
+        </Route>
         <Route path="/shop/:gender/:categoryName/:categoryId">
           <ShopPage />
         </Route>

@@ -15,6 +15,9 @@ export const SET_FETCH_STATE = 'SET_FETCH_STATE';
 export const SET_LIMIT = 'SET_LIMIT';
 export const SET_OFFSET = 'SET_OFFSET';
 export const SET_FILTER = 'SET_FILTER';
+export const SET_SORT = 'SET_SORT';
+export const SET_CATEGORY = 'SET_CATEGORY';
+export const SET_CURRENT_PRODUCT = 'SET_CURRENT_PRODUCT';
 
 // ShoppingCart Reducer Action Types
 export const SET_CART = 'SET_CART';

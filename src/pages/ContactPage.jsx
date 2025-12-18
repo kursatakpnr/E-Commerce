@@ -29,23 +29,23 @@ const ContactPage = () => {
           <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
             {/* Left Content */}
             <div className="w-full lg:w-1/2 text-center lg:text-left">
-              <p className="text-sm font-bold text-slate-700 mb-4">CONTACT US</p>
+              <p className="text-sm font-bold text-slate-700 mb-4">BİZE ULAŞIN</p>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 mb-6">
-                Get in touch today!
+                Bugün Bize Ulaşın!
               </h1>
               <p className="text-gray-500 text-base md:text-lg mb-8 max-w-md mx-auto lg:mx-0">
-                We know how large objects will act, but things on a small scale just do not act that way.
+                Sorularınız ve önerileriniz için bize ulaşabilirsiniz. Size en kısa sürede dönüş yaparız.
               </p>
               
               {/* Contact Info */}
               <div className="space-y-4 mb-8">
                 <div className="flex items-center justify-center lg:justify-start gap-3">
                   <Phone className="w-5 h-5 text-[#23A6F0]" />
-                  <span className="text-slate-800 font-bold">Phone: +451 215 215</span>
+                  <span className="text-slate-800 font-bold">Telefon: +90 212 555 0103</span>
                 </div>
                 <div className="flex items-center justify-center lg:justify-start gap-3">
                   <Mail className="w-5 h-5 text-[#23A6F0]" />
-                  <span className="text-slate-800 font-bold">Fax: +451 215 215</span>
+                  <span className="text-slate-800 font-bold">E-posta: info@bandage.com</span>
                 </div>
               </div>
 
@@ -86,9 +86,9 @@ const ContactPage = () => {
       <section className="bg-gray-50 py-12 md:py-20">
         <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 xl:px-24">
           <div className="text-center mb-12">
-            <p className="text-sm font-bold text-slate-700 mb-4">VISIT OUR OFFICE</p>
+            <p className="text-sm font-bold text-slate-700 mb-4">OFİSİMİZİ ZİYARET EDİN</p>
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-800 max-w-lg mx-auto">
-              We help small businesses with big ideas
+              Küçük işletmelere büyük fikirlerle yardımcı oluyoruz
             </h2>
           </div>
 
@@ -99,11 +99,11 @@ const ContactPage = () => {
               <div className="w-16 h-16 bg-[#23A6F0] bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Phone className="w-8 h-8 text-[#23A6F0]" />
               </div>
-              <p className="text-sm text-slate-600 mb-2">georgia.young@example.com</p>
-              <p className="text-sm text-slate-600 mb-6">georgia.young@ple.com</p>
-              <p className="text-base font-bold text-slate-800 mb-4">Get Support</p>
+              <p className="text-sm text-slate-600 mb-2">destek@bandage.com</p>
+              <p className="text-sm text-slate-600 mb-6">satis@bandage.com</p>
+              <p className="text-base font-bold text-slate-800 mb-4">Destek Alın</p>
               <button className="border-2 border-[#23A6F0] text-[#23A6F0] px-6 py-3 rounded-full font-bold text-sm hover:bg-[#23A6F0] hover:text-white transition-colors">
-                Submit Request
+                Talep Gönder
               </button>
             </div>
 
@@ -112,11 +112,11 @@ const ContactPage = () => {
               <div className="w-16 h-16 bg-[#23A6F0] rounded-full flex items-center justify-center mx-auto mb-6">
                 <MapPin className="w-8 h-8 text-white" />
               </div>
-              <p className="text-sm text-gray-300 mb-2">georgia.young@example.com</p>
-              <p className="text-sm text-gray-300 mb-6">georgia.young@ple.com</p>
-              <p className="text-base font-bold text-white mb-4">Get Support</p>
+              <p className="text-sm text-gray-300 mb-2">İstanbul, Türkiye</p>
+              <p className="text-sm text-gray-300 mb-6">Levent Plaza, Kat 5</p>
+              <p className="text-base font-bold text-white mb-4">Adres Bilgisi</p>
               <button className="border-2 border-[#23A6F0] text-[#23A6F0] px-6 py-3 rounded-full font-bold text-sm hover:bg-[#23A6F0] hover:text-white transition-colors">
-                Submit Request
+                Yol Tarifi Al
               </button>
             </div>
 
@@ -125,11 +125,11 @@ const ContactPage = () => {
               <div className="w-16 h-16 bg-[#23A6F0] bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Mail className="w-8 h-8 text-[#23A6F0]" />
               </div>
-              <p className="text-sm text-slate-600 mb-2">georgia.young@example.com</p>
-              <p className="text-sm text-slate-600 mb-6">georgia.young@ple.com</p>
-              <p className="text-base font-bold text-slate-800 mb-4">Get Support</p>
+              <p className="text-sm text-slate-600 mb-2">info@bandage.com</p>
+              <p className="text-sm text-slate-600 mb-6">kariyer@bandage.com</p>
+              <p className="text-base font-bold text-slate-800 mb-4">E-posta Gönder</p>
               <button className="border-2 border-[#23A6F0] text-[#23A6F0] px-6 py-3 rounded-full font-bold text-sm hover:bg-[#23A6F0] hover:text-white transition-colors">
-                Submit Request
+                Mesaj Gönder
               </button>
             </div>
           </div>
@@ -141,12 +141,12 @@ const ContactPage = () => {
         <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 xl:px-24">
           <div className="text-center mb-12">
             <div className="w-16 h-1 bg-[#23A6F0] mx-auto mb-6"></div>
-            <p className="text-sm font-bold text-slate-700 mb-4">WE CAN'T WAIT TO MEET YOU</p>
+            <p className="text-sm font-bold text-slate-700 mb-4">SİZİNLE TANISİMAK İÇİN SABIRSİZLANIYORUZ</p>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 mb-6">
-              Let's Talk
+              Hadi Konuşalım
             </h2>
             <button className="bg-[#23A6F0] text-white px-8 py-4 rounded font-bold text-sm hover:bg-[#1a8cd8] transition-colors">
-              Try it free now
+              Ücretsiz Deneyin
             </button>
           </div>
         </div>
@@ -157,10 +157,10 @@ const ContactPage = () => {
         <div className="max-w-3xl mx-auto px-4 md:px-8">
           <div className="text-center mb-10">
             <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-4">
-              Send us a message
+              Bize Mesaj Gönderin
             </h2>
             <p className="text-gray-500">
-              Fill out the form below and we'll get back to you as soon as possible.
+              Aşağıdaki formu doldurun, en kısa sürede size dönüş yapalım.
             </p>
           </div>
 
@@ -169,7 +169,7 @@ const ContactPage = () => {
               {/* Name */}
               <div>
                 <label htmlFor="name" className="block text-sm font-bold text-slate-700 mb-2">
-                  Your Name *
+                  Adınız *
                 </label>
                 <input
                   type="text"
@@ -177,7 +177,7 @@ const ContactPage = () => {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  placeholder="Full Name"
+                  placeholder="Ad Soyad"
                   required
                   className="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-[#23A6F0] transition-colors"
                 />
@@ -186,7 +186,7 @@ const ContactPage = () => {
               {/* Email */}
               <div>
                 <label htmlFor="email" className="block text-sm font-bold text-slate-700 mb-2">
-                  Your Email *
+                  E-posta *
                 </label>
                 <input
                   type="email"
@@ -194,7 +194,7 @@ const ContactPage = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  placeholder="example@email.com"
+                  placeholder="ornek@email.com"
                   required
                   className="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-[#23A6F0] transition-colors"
                 />
@@ -204,7 +204,7 @@ const ContactPage = () => {
             {/* Subject */}
             <div className="mb-6">
               <label htmlFor="subject" className="block text-sm font-bold text-slate-700 mb-2">
-                Subject
+                Konu
               </label>
               <input
                 type="text"
@@ -212,7 +212,7 @@ const ContactPage = () => {
                 name="subject"
                 value={formData.subject}
                 onChange={handleChange}
-                placeholder="How can we help?"
+                placeholder="Size nasıl yardımcı olabiliriz?"
                 className="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-[#23A6F0] transition-colors"
               />
             </div>
@@ -220,14 +220,14 @@ const ContactPage = () => {
             {/* Message */}
             <div className="mb-6">
               <label htmlFor="message" className="block text-sm font-bold text-slate-700 mb-2">
-                Message *
+                Mesaj *
               </label>
               <textarea
                 id="message"
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
-                placeholder="Your message here..."
+                placeholder="Mesajınızı buraya yazın..."
                 required
                 rows="5"
                 className="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-[#23A6F0] transition-colors resize-none"
@@ -240,7 +240,7 @@ const ContactPage = () => {
               className="w-full md:w-auto bg-[#23A6F0] text-white px-10 py-4 rounded font-bold text-sm hover:bg-[#1a8cd8] transition-colors flex items-center justify-center gap-2"
             >
               <Send className="w-4 h-4" />
-              Send Message
+              Mesaj Gönder
             </button>
           </form>
         </div>

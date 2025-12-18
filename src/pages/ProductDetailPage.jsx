@@ -1,55 +1,108 @@
-import React, { useState } from 'react';
-import { ChevronRight, ChevronLeft, Heart, ShoppingCart, Eye, Star, Leaf } from 'lucide-react';
-import { Link, useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { ChevronRight, ChevronLeft, Heart, ShoppingCart, Eye, Star, Leaf, Loader2, ArrowLeft } from 'lucide-react';
+import { Link, useParams, useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { FaAws, FaRedditAlien, FaLyft, FaStripe } from 'react-icons/fa';
+import { fetchProductById, fetchCategories, FETCH_STATES } from '../store/actions/productActions';
 import ProductCard from '../components/ProductCard';
-import card1 from '../assets/card-1.jpg';
-import card2 from '../assets/card-2.jpg';
-import card3 from '../assets/card-3.png';
-import best1 from '../assets/best-1.png';
-import best4 from '../assets/best-4.jpg';
 
 const ProductDetailPage = () => {
-  const { productId } = useParams();
+  const { productId, gender, categoryName, categoryId } = useParams();
+  const history = useHistory();
+  const dispatch = useDispatch();
+  
   const [selectedImage, setSelectedImage] = useState(0);
   const [selectedColor, setSelectedColor] = useState(0);
 
-  // Sample product data - in real app this would come from API
-  const product = {
-    id: productId,
-    title: "Caramel Cone Ice Cream",
-    brand: "Häagen-Dazs",
-    rating: 4,
-    reviews: 10,
-    price: "$5.99",
-    originalPrice: "$8.99",
-    availability: "In Stock",
-    description: "Met minim Mollie non desert Alamo est sit cliquey dolor do met sent.,,, , , , , ",
-    colors: ['bg-blue-500', 'bg-green-500', 'bg-orange-500', 'bg-slate-800'],
-    images: [card1, card2, card3, best1],
+  // Redux state
+  const currentProduct = useSelector((state) => state.product.currentProduct);
+  const fetchState = useSelector((state) => state.product.fetchState);
+  const categories = useSelector((state) => state.product.categories);
+  const productList = useSelector((state) => state.product.productList);
+
+  // Ürünü fetch et
+  useEffect(() => {
+    if (productId) {
+      dispatch(fetchProductById(productId));
+    }
+  }, [dispatch, productId]);
+
+  // Kategorileri fetch et (breadcrumb için)
+  useEffect(() => {
+    if (categories.length === 0) {
+      dispatch(fetchCategories());
+    }
+  }, [dispatch, categories.length]);
+
+  // Loading durumu
+  const isLoading = fetchState === FETCH_STATES.FETCHING;
+
+  // Kategori bilgisini bul
+  const productCategory = currentProduct 
+    ? categories.find(cat => cat.id === currentProduct.category_id)
+    : null;
+
+  // İlgili ürünler (aynı kategoriden)
+  const relatedProducts = productList
+    .filter(p => p.category_id === currentProduct?.category_id && p.id !== currentProduct?.id)
+    .slice(0, 4);
+
+  // Geri butonu
+  const handleGoBack = () => {
+    history.goBack();
   };
 
-  // Related products
-  const relatedProducts = [
-    { id: 1, image: card1, title: "Caramel Cone Ice Cream", department: "Frozen Desserts", originalPrice: "$8.99", price: "$5.99" },
-    { id: 2, image: card2, title: "Fresh Green Apples", department: "Fruits & Vegetables", originalPrice: "$4.99", price: "$2.99" },
-    { id: 3, image: card3, title: "Premium Smoked Ham", department: "Deli & Meat", originalPrice: "$24.99", price: "$18.99" },
-    { id: 4, image: best4, title: "Werther's Caramel", department: "Snacks & Candy", originalPrice: "$5.99", price: "$3.99" },
-  ];
+  // Loading spinner
+  if (isLoading || !currentProduct) {
+    return (
+      <div className="flex flex-col min-h-screen">
+        <div className="flex-grow flex flex-col items-center justify-center py-20">
+          <Loader2 className="w-12 h-12 text-blue-500 animate-spin mb-4" />
+          <p className="text-slate-500 font-medium">Ürün yükleniyor...</p>
+        </div>
+      </div>
+    );
+  }
 
-  const thumbnails = product.images;
+  // Ürün görselleri (varsayılan görsel yoksa placeholder)
+  const productImages = currentProduct.images?.length > 0 
+    ? currentProduct.images.map(img => img.url)
+    : ['/src/assets/card-1.jpg'];
 
   return (
     <div className="flex flex-col">
       {/* Breadcrumb Section */}
       <section className="bg-gray-50 py-4 px-4 md:px-8 lg:px-16 xl:px-24">
-        <nav className="flex items-center gap-2 text-sm">
-          <Link to="/" className="text-slate-800 font-bold hover:text-blue-500">Home</Link>
-          <ChevronRight className="w-4 h-4 text-slate-400" />
-          <Link to="/shop" className="text-slate-800 font-bold hover:text-blue-500">Shop</Link>
-          <ChevronRight className="w-4 h-4 text-slate-400" />
-          <span className="text-slate-400 font-bold">Product Detail</span>
-        </nav>
+        <div className="flex items-center justify-between flex-wrap gap-4">
+          {/* Back Button */}
+          <button 
+            onClick={handleGoBack}
+            className="flex items-center gap-2 text-slate-600 hover:text-blue-500 transition-colors font-medium"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            <span>Geri Dön</span>
+          </button>
+
+          {/* Breadcrumb */}
+          <nav className="flex items-center gap-2 text-sm flex-wrap">
+            <Link to="/" className="text-slate-800 font-bold hover:text-blue-500">Ana Sayfa</Link>
+            <ChevronRight className="w-4 h-4 text-slate-400" />
+            <Link to="/shop" className="text-slate-800 font-bold hover:text-blue-500">Mağaza</Link>
+            {productCategory && (
+              <>
+                <ChevronRight className="w-4 h-4 text-slate-400" />
+                <Link 
+                  to={`/shop/${productCategory.category_type === 'taze' ? 'taze' : 'paketli'}/${productCategory.code}/${productCategory.id}`}
+                  className="text-slate-800 font-bold hover:text-blue-500"
+                >
+                  {productCategory.title}
+                </Link>
+              </>
+            )}
+            <ChevronRight className="w-4 h-4 text-slate-400" />
+            <span className="text-slate-400 font-bold">{currentProduct.name}</span>
+          </nav>
+        </div>
       </section>
 
       {/* Product Detail Section */}
@@ -60,41 +113,47 @@ const ProductDetailPage = () => {
             {/* Main Image with Navigation */}
             <div className="relative bg-white rounded-lg overflow-hidden mb-4">
               <img 
-                src={thumbnails[selectedImage]} 
-                alt={product.title} 
+                src={productImages[selectedImage]} 
+                alt={currentProduct.name} 
                 className="w-full h-[400px] md:h-[500px] object-contain"
               />
               {/* Navigation Arrows */}
-              <button 
-                onClick={() => setSelectedImage(prev => prev > 0 ? prev - 1 : thumbnails.length - 1)}
-                className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/80 rounded-full flex items-center justify-center hover:bg-white transition-colors shadow-md"
-              >
-                <ChevronLeft className="w-6 h-6 text-slate-600" />
-              </button>
-              <button 
-                onClick={() => setSelectedImage(prev => prev < thumbnails.length - 1 ? prev + 1 : 0)}
-                className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/80 rounded-full flex items-center justify-center hover:bg-white transition-colors shadow-md"
-              >
-                <ChevronRight className="w-6 h-6 text-slate-600" />
-              </button>
+              {productImages.length > 1 && (
+                <>
+                  <button 
+                    onClick={() => setSelectedImage(prev => prev > 0 ? prev - 1 : productImages.length - 1)}
+                    className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/80 rounded-full flex items-center justify-center hover:bg-white transition-colors shadow-md"
+                  >
+                    <ChevronLeft className="w-6 h-6 text-slate-600" />
+                  </button>
+                  <button 
+                    onClick={() => setSelectedImage(prev => prev < productImages.length - 1 ? prev + 1 : 0)}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/80 rounded-full flex items-center justify-center hover:bg-white transition-colors shadow-md"
+                  >
+                    <ChevronRight className="w-6 h-6 text-slate-600" />
+                  </button>
+                </>
+              )}
             </div>
             {/* Thumbnails */}
-            <div className="flex gap-4">
-              {thumbnails.map((thumb, index) => (
-                <button 
-                  key={index}
-                  onClick={() => setSelectedImage(index)}
-                  className={`w-20 h-20 rounded-lg overflow-hidden border-2 ${selectedImage === index ? 'border-blue-500' : 'border-transparent'}`}
-                >
-                  <img src={thumb} alt={`Thumbnail ${index + 1}`} className="w-full h-full object-cover" />
-                </button>
-              ))}
-            </div>
+            {productImages.length > 1 && (
+              <div className="flex gap-4">
+                {productImages.map((thumb, index) => (
+                  <button 
+                    key={index}
+                    onClick={() => setSelectedImage(index)}
+                    className={`w-20 h-20 rounded-lg overflow-hidden border-2 ${selectedImage === index ? 'border-blue-500' : 'border-transparent'}`}
+                  >
+                    <img src={thumb} alt={`Thumbnail ${index + 1}`} className="w-full h-full object-cover" />
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Product Info */}
           <div className="lg:w-1/2">
-            <h1 className="text-slate-800 font-bold text-2xl mb-2">{product.title}</h1>
+            <h1 className="text-slate-800 font-bold text-2xl mb-2">{currentProduct.name}</h1>
             
             {/* Rating */}
             <div className="flex items-center gap-2 mb-4">
@@ -102,35 +161,38 @@ const ProductDetailPage = () => {
                 {[1, 2, 3, 4, 5].map((star) => (
                   <Star 
                     key={star} 
-                    className={`w-5 h-5 ${star <= product.rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'}`} 
+                    className={`w-5 h-5 ${star <= Math.round(currentProduct.rating) ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'}`} 
                   />
                 ))}
               </div>
-              <span className="text-slate-500 text-sm font-bold">{product.reviews} Reviews</span>
+              <span className="text-slate-500 text-sm font-bold">{currentProduct.rating?.toFixed(1)} Puan</span>
+              <span className="text-slate-400 text-sm">({currentProduct.sell_count} satış)</span>
             </div>
 
             {/* Price */}
             <div className="mb-4">
-              <span className="text-slate-800 font-bold text-2xl">{product.price}</span>
-              <span className="text-slate-400 line-through ml-2">{product.originalPrice}</span>
+              <span className="text-slate-800 font-bold text-2xl">₺{currentProduct.price?.toFixed(2)}</span>
+              <span className="text-slate-400 line-through ml-2">₺{(currentProduct.price * 1.2).toFixed(2)}</span>
             </div>
 
             {/* Availability */}
             <div className="flex items-center gap-2 mb-6">
-              <span className="text-slate-500 font-bold text-sm">Availability:</span>
-              <span className="text-blue-500 font-bold text-sm">{product.availability}</span>
+              <span className="text-slate-500 font-bold text-sm">Stok Durumu:</span>
+              <span className={`font-bold text-sm ${currentProduct.stock > 0 ? 'text-green-500' : 'text-red-500'}`}>
+                {currentProduct.stock > 0 ? `${currentProduct.stock} adet stokta` : 'Stokta yok'}
+              </span>
             </div>
 
             {/* Description */}
             <p className="text-slate-500 text-sm mb-6 leading-relaxed">
-              {product.description}
+              {currentProduct.description}
             </p>
 
             <hr className="mb-6" />
 
             {/* Color Options */}
             <div className="flex items-center gap-3 mb-8">
-              {product.colors.map((color, index) => (
+              {['bg-blue-500', 'bg-green-500', 'bg-orange-500', 'bg-slate-800'].map((color, index) => (
                 <button 
                   key={index}
                   onClick={() => setSelectedColor(index)}
@@ -142,7 +204,7 @@ const ProductDetailPage = () => {
             {/* Action Buttons */}
             <div className="flex flex-wrap items-center gap-3">
               <button className="bg-blue-500 text-white font-bold py-3 px-8 rounded hover:bg-blue-600 transition-colors">
-                Select Options
+                Sepete Ekle
               </button>
               <button className="w-12 h-12 border border-gray-300 rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors">
                 <Heart className="w-5 h-5 text-slate-600" />
@@ -163,13 +225,13 @@ const ProductDetailPage = () => {
         {/* Tabs */}
         <div className="flex flex-wrap justify-center gap-4 md:gap-8 border-b border-gray-200 mb-8">
           <button className="text-slate-500 font-bold text-sm pb-4 border-b-2 border-transparent hover:text-slate-800">
-            Description
+            Açıklama
           </button>
           <button className="text-slate-800 font-bold text-sm pb-4 border-b-2 border-blue-500">
-            Additional Information
+            Ek Bilgiler
           </button>
           <button className="text-slate-500 font-bold text-sm pb-4 border-b-2 border-transparent hover:text-slate-800">
-            Reviews <span className="text-green-500">(0)</span>
+            Değerlendirmeler <span className="text-green-500">({currentProduct.sell_count})</span>
           </button>
         </div>
 
@@ -177,56 +239,67 @@ const ProductDetailPage = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Description Column */}
           <div>
-            <h3 className="text-slate-800 font-bold text-xl mb-4">the quick fox jumps over</h3>
+            <h3 className="text-slate-800 font-bold text-xl mb-4">Ürün Özellikleri</h3>
             <p className="text-slate-500 text-sm leading-relaxed mb-4">
-              Met minim Mollie non desert Alamo est sit cliquey dolor do met sent. REdistribution programmer.
+              {currentProduct.description}
             </p>
             <p className="text-slate-500 text-sm leading-relaxed mb-4">
-              Met minim Mollie non desert Alamo est sit cliquey dolor do met sent. RERIBUTION original.
+              Yüksek kalite standartlarına uygun olarak üretilmiştir.
             </p>
             <p className="text-slate-500 text-sm leading-relaxed">
-              Met minim Mollie non desert Alamo est sit cliquey dolor do met sent.
+              Aileniz için güvenle tercih edebilirsiniz.
             </p>
           </div>
 
           {/* Additional Info Column */}
           <div>
-            <h3 className="text-slate-800 font-bold text-xl mb-4">the quick fox jumps over</h3>
+            <h3 className="text-slate-800 font-bold text-xl mb-4">Ek Bilgiler</h3>
             <ul className="space-y-2">
               <li className="flex items-center gap-2 text-slate-500 text-sm">
                 <ChevronRight className="w-4 h-4 text-slate-400" />
-                the quick fox jumps over the lazy dog
+                Ürün ID: {currentProduct.id}
               </li>
               <li className="flex items-center gap-2 text-slate-500 text-sm">
                 <ChevronRight className="w-4 h-4 text-slate-400" />
-                the quick fox jumps over the lazy dog
+                Kategori: {productCategory?.title || 'Belirtilmemiş'}
               </li>
               <li className="flex items-center gap-2 text-slate-500 text-sm">
                 <ChevronRight className="w-4 h-4 text-slate-400" />
-                the quick fox jumps over the lazy dog
+                Stok: {currentProduct.stock} adet
               </li>
               <li className="flex items-center gap-2 text-slate-500 text-sm">
                 <ChevronRight className="w-4 h-4 text-slate-400" />
-                the quick fox jumps over the lazy dog
+                Satış Sayısı: {currentProduct.sell_count}
               </li>
             </ul>
           </div>
 
           {/* Reviews Column */}
           <div>
-            <h3 className="text-slate-800 font-bold text-xl mb-4">the quick fox jumps over</h3>
+            <h3 className="text-slate-800 font-bold text-xl mb-4">Müşteri Yorumları</h3>
+            <div className="flex items-center gap-2 mb-4">
+              <div className="flex">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <Star 
+                    key={star} 
+                    className={`w-5 h-5 ${star <= Math.round(currentProduct.rating) ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'}`} 
+                  />
+                ))}
+              </div>
+              <span className="text-slate-600 font-bold">{currentProduct.rating?.toFixed(1)}/5</span>
+            </div>
             <ul className="space-y-2">
               <li className="flex items-center gap-2 text-slate-500 text-sm">
                 <ChevronRight className="w-4 h-4 text-slate-400" />
-                the quick fox jumps over the lazy dog
+                Harika lezzet, tavsiye ederim
               </li>
               <li className="flex items-center gap-2 text-slate-500 text-sm">
                 <ChevronRight className="w-4 h-4 text-slate-400" />
-                the quick fox jumps over the lazy dog
+                Kaliteli ve taze ürün
               </li>
               <li className="flex items-center gap-2 text-slate-500 text-sm">
                 <ChevronRight className="w-4 h-4 text-slate-400" />
-                the quick fox jumps over the lazy dog
+                Hızlı teslimat, teşekkürler
               </li>
             </ul>
           </div>
@@ -234,23 +307,33 @@ const ProductDetailPage = () => {
       </section>
 
       {/* Related Products */}
-      <section className="py-12 px-4 md:px-8 lg:px-16 xl:px-24 bg-gray-50">
-        <h2 className="text-slate-800 font-bold text-xl mb-8">BESTSELLER PRODUCTS</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-          {relatedProducts.map((relatedProduct) => (
-            <ProductCard 
-              key={relatedProduct.id}
-              id={relatedProduct.id}
-              image={relatedProduct.image}
-              title={relatedProduct.title}
-              department={relatedProduct.department}
-              originalPrice={relatedProduct.originalPrice}
-              price={relatedProduct.price}
-              colors={['bg-blue-500', 'bg-green-500', 'bg-orange-500', 'bg-slate-800']}
-            />
-          ))}
-        </div>
-      </section>
+      {relatedProducts.length > 0 && (
+        <section className="py-12 px-4 md:px-8 lg:px-16 xl:px-24 bg-gray-50">
+          <h2 className="text-slate-800 font-bold text-xl mb-8">BENZERİ ÜRÜNLER</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+            {relatedProducts.map((relatedProduct) => {
+              const relCategory = categories.find(cat => cat.id === relatedProduct.category_id);
+              const relCategoryType = relCategory?.category_type === 'taze' ? 'taze' : 'paketli';
+              
+              return (
+                <ProductCard 
+                  key={relatedProduct.id}
+                  id={relatedProduct.id}
+                  image={relatedProduct.images?.[0]?.url || '/src/assets/card-1.jpg'}
+                  title={relatedProduct.name}
+                  department={relatedProduct.description}
+                  originalPrice={`₺${(relatedProduct.price * 1.2).toFixed(2)}`}
+                  price={`₺${relatedProduct.price.toFixed(2)}`}
+                  colors={['bg-blue-500', 'bg-green-500', 'bg-orange-500', 'bg-slate-800']}
+                  categoryId={relatedProduct.category_id}
+                  gender={relCategoryType}
+                  categoryName={relCategory?.code}
+                />
+              );
+            })}
+          </div>
+        </section>
+      )}
 
       {/* Brands Section */}
       <section className="py-12 bg-gray-100">
