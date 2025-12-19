@@ -11,6 +11,16 @@ import {
 } from './actionTypes';
 
 import { fetchRoles as fetchRolesApi, login as loginApi, verifyToken } from '../../mock/mockApi';
+import { 
+  fetchAddresses as fetchAddressesApi, 
+  addAddress as addAddressApi, 
+  updateAddress as updateAddressApi, 
+  deleteAddress as deleteAddressApi,
+  fetchCreditCards as fetchCreditCardsApi,
+  addCreditCard as addCreditCardApi,
+  updateCreditCard as updateCreditCardApi,
+  deleteCreditCard as deleteCreditCardApi
+} from '../../mock/mockApi';
 import { setAuthToken, clearAuthToken, initializeAuthToken } from '../../api/axiosInstance';
 
 // ============== SYNC ACTION CREATORS ==============
@@ -140,5 +150,168 @@ export const autoLogin = () => async (dispatch) => {
     console.error('Auto login error:', error);
     clearAuthToken();
     return { success: false };
+  }
+};
+
+// ============== ADDRESS THUNK ACTIONS ==============
+
+// Adresleri getir
+export const fetchAddresses = () => async (dispatch, getState) => {
+  const { client } = getState();
+  if (!client.user) {
+    return { success: false, error: 'User not logged in' };
+  }
+
+  try {
+    const response = await fetchAddressesApi(client.user.id);
+    if (response.success) {
+      dispatch(setAddressList(response.data));
+      return { success: true, data: response.data };
+    }
+    return { success: false, error: response.error };
+  } catch (error) {
+    console.error('Error fetching addresses:', error);
+    return { success: false, error: 'An error occurred' };
+  }
+};
+
+// Yeni adres ekle
+export const addAddressAction = (addressData) => async (dispatch, getState) => {
+  const { client } = getState();
+  if (!client.user) {
+    return { success: false, error: 'User not logged in' };
+  }
+
+  try {
+    const response = await addAddressApi({ ...addressData, user_id: client.user.id });
+    if (response.success) {
+      // Listeyi güncelle
+      dispatch(setAddressList([...client.addressList, response.data]));
+      return { success: true, data: response.data };
+    }
+    return { success: false, error: response.error };
+  } catch (error) {
+    console.error('Error adding address:', error);
+    return { success: false, error: 'An error occurred' };
+  }
+};
+
+// Adres güncelle
+export const updateAddressAction = (addressId, addressData) => async (dispatch, getState) => {
+  const { client } = getState();
+  
+  try {
+    const response = await updateAddressApi(addressId, addressData);
+    if (response.success) {
+      // Listeyi güncelle
+      const updatedList = client.addressList.map(addr => 
+        addr.id === addressId ? response.data : addr
+      );
+      dispatch(setAddressList(updatedList));
+      return { success: true, data: response.data };
+    }
+    return { success: false, error: response.error };
+  } catch (error) {
+    console.error('Error updating address:', error);
+    return { success: false, error: 'An error occurred' };
+  }
+};
+
+// Adres sil
+export const deleteAddressAction = (addressId) => async (dispatch, getState) => {
+  const { client } = getState();
+  
+  try {
+    const response = await deleteAddressApi(addressId);
+    if (response.success) {
+      // Listeden kaldır
+      const updatedList = client.addressList.filter(addr => addr.id !== addressId);
+      dispatch(setAddressList(updatedList));
+      return { success: true };
+    }
+    return { success: false, error: response.error };
+  } catch (error) {
+    console.error('Error deleting address:', error);
+    return { success: false, error: 'An error occurred' };
+  }
+};
+
+// ============== CREDIT CARD THUNK ACTIONS ==============
+
+// Kartları getir
+export const fetchCreditCards = () => async (dispatch, getState) => {
+  const { client } = getState();
+  if (!client.user) {
+    return { success: false, error: 'User not logged in' };
+  }
+
+  try {
+    const response = await fetchCreditCardsApi(client.user.id);
+    if (response.success) {
+      dispatch(setCreditCards(response.data));
+      return { success: true, data: response.data };
+    }
+    return { success: false, error: response.error };
+  } catch (error) {
+    console.error('Error fetching credit cards:', error);
+    return { success: false, error: 'An error occurred' };
+  }
+};
+
+// Yeni kart ekle
+export const addCreditCardAction = (cardData) => async (dispatch, getState) => {
+  const { client } = getState();
+  if (!client.user) {
+    return { success: false, error: 'User not logged in' };
+  }
+
+  try {
+    const response = await addCreditCardApi({ ...cardData, user_id: client.user.id });
+    if (response.success) {
+      dispatch(setCreditCards([...client.creditCards, response.data]));
+      return { success: true, data: response.data };
+    }
+    return { success: false, error: response.error };
+  } catch (error) {
+    console.error('Error adding credit card:', error);
+    return { success: false, error: 'An error occurred' };
+  }
+};
+
+// Kart güncelle
+export const updateCreditCardAction = (cardId, cardData) => async (dispatch, getState) => {
+  const { client } = getState();
+  
+  try {
+    const response = await updateCreditCardApi(cardId, cardData);
+    if (response.success) {
+      const updatedList = client.creditCards.map(card => 
+        card.id === cardId ? response.data : card
+      );
+      dispatch(setCreditCards(updatedList));
+      return { success: true, data: response.data };
+    }
+    return { success: false, error: response.error };
+  } catch (error) {
+    console.error('Error updating credit card:', error);
+    return { success: false, error: 'An error occurred' };
+  }
+};
+
+// Kart sil
+export const deleteCreditCardAction = (cardId) => async (dispatch, getState) => {
+  const { client } = getState();
+  
+  try {
+    const response = await deleteCreditCardApi(cardId);
+    if (response.success) {
+      const updatedList = client.creditCards.filter(card => card.id !== cardId);
+      dispatch(setCreditCards(updatedList));
+      return { success: true };
+    }
+    return { success: false, error: response.error };
+  } catch (error) {
+    console.error('Error deleting credit card:', error);
+    return { success: false, error: 'An error occurred' };
   }
 };

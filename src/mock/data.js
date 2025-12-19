@@ -311,3 +311,55 @@ export const mockProducts = [
 export const generateMockToken = (userId) => {
   return `mock-jwt-token-${userId}-${Date.now()}`;
 };
+
+// Türkiye İlleri
+export const turkishCities = [
+  'Adana', 'Adıyaman', 'Afyonkarahisar', 'Ağrı', 'Aksaray', 'Amasya', 'Ankara', 'Antalya', 'Ardahan', 'Artvin',
+  'Aydın', 'Balıkesir', 'Bartın', 'Batman', 'Bayburt', 'Bilecik', 'Bingöl', 'Bitlis', 'Bolu', 'Burdur',
+  'Bursa', 'Çanakkale', 'Çankırı', 'Çorum', 'Denizli', 'Diyarbakır', 'Düzce', 'Edirne', 'Elazığ', 'Erzincan',
+  'Erzurum', 'Eskişehir', 'Gaziantep', 'Giresun', 'Gümüşhane', 'Hakkâri', 'Hatay', 'Iğdır', 'Isparta', 'İstanbul',
+  'İzmir', 'Kahramanmaraş', 'Karabük', 'Karaman', 'Kars', 'Kastamonu', 'Kayseri', 'Kırıkkale', 'Kırklareli', 'Kırşehir',
+  'Kilis', 'Kocaeli', 'Konya', 'Kütahya', 'Malatya', 'Manisa', 'Mardin', 'Mersin', 'Muğla', 'Muş',
+  'Nevşehir', 'Niğde', 'Ordu', 'Osmaniye', 'Rize', 'Sakarya', 'Samsun', 'Siirt', 'Sinop', 'Sivas',
+  'Şanlıurfa', 'Şırnak', 'Tekirdağ', 'Tokat', 'Trabzon', 'Tunceli', 'Uşak', 'Van', 'Yalova', 'Yozgat', 'Zonguldak'
+];
+
+// Mock Adresler (kullanıcıya göre)
+export let mockAddresses = [
+  {
+    id: 1,
+    user_id: 1,
+    title: 'Ev',
+    name: 'Test',
+    surname: 'Müşteri',
+    phone: '05551234567',
+    city: 'İstanbul',
+    district: 'Kadıköy',
+    neighborhood: 'Caferağa Mah.',
+    address: 'Moda Cad. No: 12 Daire: 5'
+  },
+  {
+    id: 2,
+    user_id: 1,
+    title: 'İş',
+    name: 'Test',
+    surname: 'Müşteri',
+    phone: '05559876543',
+    city: 'İstanbul',
+    district: 'Şişli',
+    neighborhood: 'Mecidiyeköy Mah.',
+    address: 'Büyükdere Cad. Plaza İş Merkezi Kat: 5'
+  }
+];
+
+// Mock Kredi Kartları
+export let mockCreditCards = [
+  {
+    id: 1,
+    user_id: 1,
+    card_no: '**** **** **** 1234',
+    expire_month: 12,
+    expire_year: 2026,
+    name_on_card: 'TEST MUSTERI'
+  }
+];

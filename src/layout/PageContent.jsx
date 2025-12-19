@@ -9,6 +9,8 @@ import AboutPage from '../pages/AboutPage';
 import SignupPage from '../pages/SignupPage';
 import LoginPage from '../pages/LoginPage';
 import ProfilePage from '../pages/ProfilePage';
+import CartPage from '../pages/CartPage';
+import CreateOrderPage from '../pages/CreateOrderPage';
 
 const PageContent = () => {
   return (
@@ -47,6 +49,12 @@ const PageContent = () => {
         </Route>
         <Route path="/profile">
           <ProfilePage />
+        </Route>
+        <Route path="/cart">
+          <CartPage />
+        </Route>
+        <Route path="/order">
+          <CreateOrderPage />
         </Route>
       </Switch>
     </div>

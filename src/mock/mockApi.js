@@ -6,7 +6,10 @@ import {
   registeredUsers, 
   mockCategories, 
   mockProducts,
-  generateMockToken 
+  generateMockToken,
+  mockAddresses,
+  turkishCities,
+  mockCreditCards
 } from './data';
 
 // ============== AUTH API ==============
@@ -178,5 +181,123 @@ export const fetchProductById = async (id) => {
   return {
     success: true,
     data: product
+  };
+};
+
+// ============== ADDRESS API ==============
+
+// Türkiye illerini getir
+export const getCities = () => {
+  return turkishCities;
+};
+
+// Kullanıcının adreslerini getir
+export const fetchAddresses = async (userId) => {
+  const addresses = mockAddresses.filter(a => a.user_id === userId);
+  return {
+    success: true,
+    data: addresses
+  };
+};
+
+// Yeni adres ekle
+export const addAddress = async (addressData) => {
+  const newAddress = {
+    id: mockAddresses.length > 0 ? Math.max(...mockAddresses.map(a => a.id)) + 1 : 1,
+    ...addressData
+  };
+  mockAddresses.push(newAddress);
+  return {
+    success: true,
+    data: newAddress
+  };
+};
+
+// Adres güncelle
+export const updateAddress = async (addressId, addressData) => {
+  const index = mockAddresses.findIndex(a => a.id === addressId);
+  if (index === -1) {
+    return {
+      success: false,
+      error: 'Address not found'
+    };
+  }
+  mockAddresses[index] = { ...mockAddresses[index], ...addressData };
+  return {
+    success: true,
+    data: mockAddresses[index]
+  };
+};
+
+// Adres sil
+export const deleteAddress = async (addressId) => {
+  const index = mockAddresses.findIndex(a => a.id === addressId);
+  if (index === -1) {
+    return {
+      success: false,
+      error: 'Address not found'
+    };
+  }
+  mockAddresses.splice(index, 1);
+  return {
+    success: true,
+    message: 'Address deleted successfully'
+  };
+};
+
+// ============== CREDIT CARD API ==============
+
+// Kullanıcının kartlarını getir
+export const fetchCreditCards = async (userId) => {
+  const cards = mockCreditCards.filter(c => c.user_id === userId);
+  return {
+    success: true,
+    data: cards
+  };
+};
+
+// Yeni kart ekle
+export const addCreditCard = async (cardData) => {
+  const newCard = {
+    id: mockCreditCards.length > 0 ? Math.max(...mockCreditCards.map(c => c.id)) + 1 : 1,
+    ...cardData,
+    card_no: '**** **** **** ' + cardData.card_no.slice(-4)
+  };
+  mockCreditCards.push(newCard);
+  return {
+    success: true,
+    data: newCard
+  };
+};
+
+// Kart güncelle
+export const updateCreditCard = async (cardId, cardData) => {
+  const index = mockCreditCards.findIndex(c => c.id === cardId);
+  if (index === -1) {
+    return {
+      success: false,
+      error: 'Card not found'
+    };
+  }
+  mockCreditCards[index] = { ...mockCreditCards[index], ...cardData };
+  return {
+    success: true,
+    data: mockCreditCards[index]
+  };
+};
+
+// Kart sil
+export const deleteCreditCard = async (cardId) => {
+  const index = mockCreditCards.findIndex(c => c.id === cardId);
+  if (index === -1) {
+    return {
+      success: false,
+      error: 'Card not found'
+    };
+  }
+  mockCreditCards.splice(index, 1);
+  return {
+    success: true,
+    message: 'Card deleted successfully'
   };
 };
