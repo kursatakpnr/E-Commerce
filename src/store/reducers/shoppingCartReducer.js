@@ -7,6 +7,7 @@ import {
   ADD_TO_CART,
   REMOVE_FROM_CART,
   UPDATE_CART_ITEM,
+  TOGGLE_CART_ITEM,
   CLEAR_CART
 } from '../actions/actionTypes';
 
@@ -58,7 +59,7 @@ const shoppingCartReducer = (state = initialState, action) => {
       // Yeni ürün ekle
       return {
         ...state,
-        cart: [...state.cart, { count: 1, product: action.payload }]
+        cart: [...state.cart, { count: 1, checked: true, product: action.payload }]
       };
     }
 
@@ -88,6 +89,16 @@ const shoppingCartReducer = (state = initialState, action) => {
         )
       };
     }
+
+    case TOGGLE_CART_ITEM:
+      return {
+        ...state,
+        cart: state.cart.map(item =>
+          item.product.id === action.payload
+            ? { ...item, checked: !item.checked }
+            : item
+        )
+      };
 
     case CLEAR_CART:
       return {

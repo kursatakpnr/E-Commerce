@@ -8,6 +8,7 @@ import TeamPage from '../pages/TeamPage';
 import AboutPage from '../pages/AboutPage';
 import SignupPage from '../pages/SignupPage';
 import LoginPage from '../pages/LoginPage';
+import ProfilePage from '../pages/ProfilePage';
 
 const PageContent = () => {
   return (
@@ -43,6 +44,9 @@ const PageContent = () => {
         </Route>
         <Route path="/login">
           <LoginPage />
+        </Route>
+        <Route path="/profile">
+          <ProfilePage />
         </Route>
       </Switch>
     </div>

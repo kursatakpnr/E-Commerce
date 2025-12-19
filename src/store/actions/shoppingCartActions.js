@@ -7,6 +7,7 @@ import {
   ADD_TO_CART,
   REMOVE_FROM_CART,
   UPDATE_CART_ITEM,
+  TOGGLE_CART_ITEM,
   CLEAR_CART
 } from './actionTypes';
 
@@ -46,6 +47,12 @@ export const removeFromCart = (productId) => ({
 export const updateCartItem = (productId, count) => ({
   type: UPDATE_CART_ITEM,
   payload: { productId, count }
+});
+
+// Sepetteki ürünü seç/seçme
+export const toggleCartItem = (productId) => ({
+  type: TOGGLE_CART_ITEM,
+  payload: productId
 });
 
 // Sepeti temizle

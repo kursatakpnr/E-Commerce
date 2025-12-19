@@ -87,8 +87,7 @@ const Footer = () => {
         </div>
 
         {/* Bottom Section */}
-        <div className="border-t border-slate-700 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-slate-400 text-sm font-bold">Bandage Tarafından Sevgiyle Yapıldı - Tüm Hakları Saklıdır</p>
+        <div className="border-t border-slate-700 pt-6 flex justify-center items-center">
           <div className="flex gap-4">
             <a href="#" className="text-blue-500 hover:text-blue-400 transition-colors">
               <FaFacebook className="w-6 h-6" />

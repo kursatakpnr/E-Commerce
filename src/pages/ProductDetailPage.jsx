@@ -4,6 +4,8 @@ import { Link, useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { FaAws, FaRedditAlien, FaLyft, FaStripe } from 'react-icons/fa';
 import { fetchProductById, fetchCategories, FETCH_STATES } from '../store/actions/productActions';
+import { addToCart } from '../store/actions/shoppingCartActions';
+import { toast } from 'react-toastify';
 import ProductCard from '../components/ProductCard';
 
 const ProductDetailPage = () => {
@@ -50,6 +52,26 @@ const ProductDetailPage = () => {
   // Geri butonu
   const handleGoBack = () => {
     history.goBack();
+  };
+
+  // Sepete ekle
+  const handleAddToCart = () => {
+    if (!currentProduct) return;
+    
+    const product = {
+      id: currentProduct.id,
+      name: currentProduct.name,
+      image: currentProduct.images?.[0]?.url || '/src/assets/card-1.jpg',
+      price: currentProduct.price,
+      originalPrice: currentProduct.price * 1.2,
+      department: productCategory?.title || 'Ürün',
+      categoryId: currentProduct.category_id,
+      rating: currentProduct.rating,
+      stock: currentProduct.stock
+    };
+    
+    dispatch(addToCart(product));
+    toast.success(`${currentProduct.name} sepete eklendi!`);
   };
 
   // Loading spinner
@@ -203,14 +225,16 @@ const ProductDetailPage = () => {
 
             {/* Action Buttons */}
             <div className="flex flex-wrap items-center gap-3">
-              <button className="bg-blue-500 text-white font-bold py-3 px-8 rounded hover:bg-blue-600 transition-colors">
+              <button 
+                onClick={handleAddToCart}
+                disabled={currentProduct.stock <= 0}
+                className="bg-blue-500 text-white font-bold py-3 px-8 rounded hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+              >
+                <ShoppingCart className="w-5 h-5" />
                 Sepete Ekle
               </button>
               <button className="w-12 h-12 border border-gray-300 rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors">
                 <Heart className="w-5 h-5 text-slate-600" />
-              </button>
-              <button className="w-12 h-12 border border-gray-300 rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors">
-                <ShoppingCart className="w-5 h-5 text-slate-600" />
               </button>
               <button className="w-12 h-12 border border-gray-300 rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors">
                 <Eye className="w-5 h-5 text-slate-600" />

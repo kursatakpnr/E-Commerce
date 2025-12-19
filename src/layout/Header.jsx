@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { User, Search, ShoppingCart, Menu, X, Heart, ChevronDown, LogOut, Phone, Mail, MapPin } from 'lucide-react';
+import { User, Search, ShoppingCart, Menu, X, Heart, ChevronDown, LogOut, Phone, Mail, MapPin, Trash2, Plus, Minus } from 'lucide-react';
 import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../store/actions/clientActions';
 import { fetchCategories } from '../store/actions/productActions';
+import { removeFromCart, updateCartItem } from '../store/actions/shoppingCartActions';
 import { getGravatarUrl } from '../utils/gravatar';
 import { toast } from 'react-toastify';
 import { FaInstagram, FaYoutube, FaFacebook, FaTwitter } from 'react-icons/fa';
@@ -12,6 +13,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isShopMenuOpen, setIsShopMenuOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [scrolled, setScrolled] = useState(false);
@@ -301,15 +303,106 @@ const Header = () => {
             <Heart className="w-5 h-5" />
           </Link>
           
-          {/* Cart */}
-          <Link to="/cart" className="p-2.5 hover:bg-gray-100 rounded-lg transition-colors text-slate-600 hover:text-[#23A6F0] relative group">
-            <ShoppingCart className="w-5 h-5" />
-            {cartItemCount > 0 && (
-              <span className="absolute -top-0.5 -right-0.5 bg-gradient-to-r from-[#23A6F0] to-[#1e8ed8] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold shadow-md group-hover:scale-110 transition-transform">
-                {cartItemCount}
-              </span>
+          {/* Cart with Dropdown */}
+          <div className="relative">
+            <button 
+              onClick={() => setIsCartOpen(!isCartOpen)}
+              className="p-2.5 hover:bg-gray-100 rounded-lg transition-colors text-slate-600 hover:text-[#23A6F0] relative"
+            >
+              <ShoppingCart className="w-5 h-5" />
+              {cartItemCount > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 bg-gradient-to-r from-[#23A6F0] to-[#1e8ed8] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold shadow-md">
+                  {cartItemCount}
+                </span>
+              )}
+            </button>
+            
+            {/* Cart Dropdown */}
+            {isCartOpen && (
+              <div className="absolute right-0 top-full mt-2 w-96 bg-white rounded-xl shadow-2xl border border-gray-100 z-50 overflow-hidden">
+                <div className="px-4 py-3 border-b border-gray-100 flex justify-between items-center">
+                  <h3 className="font-bold text-slate-800">Sepetim ({cartItemCount} ürün)</h3>
+                  <button onClick={() => setIsCartOpen(false)} className="text-gray-400 hover:text-gray-600">
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+                
+                {cart.length === 0 ? (
+                  <div className="p-8 text-center">
+                    <ShoppingCart className="w-12 h-12 text-gray-300 mx-auto mb-3" />
+                    <p className="text-gray-500">Sepetiniz boş</p>
+                    <Link 
+                      to="/shop" 
+                      className="inline-block mt-3 text-[#23A6F0] hover:underline text-sm font-medium"
+                      onClick={() => setIsCartOpen(false)}
+                    >
+                      Alışverişe Başla →
+                    </Link>
+                  </div>
+                ) : (
+                  <>
+                    <div className="max-h-80 overflow-y-auto">
+                      {cart.map((item) => (
+                        <div key={item.product.id} className="flex items-center gap-3 p-4 border-b border-gray-50 hover:bg-gray-50 transition-colors">
+                          <img 
+                            src={item.product.image} 
+                            alt={item.product.name}
+                            className="w-16 h-16 object-contain rounded-lg bg-gray-100"
+                          />
+                          <div className="flex-1 min-w-0">
+                            <h4 className="text-sm font-medium text-slate-800 truncate">{item.product.name}</h4>
+                            <p className="text-xs text-gray-500">{item.product.department}</p>
+                            <p className="text-sm font-bold text-[#23A6F0] mt-1">₺{item.product.price.toFixed(2)}</p>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <button 
+                              onClick={() => dispatch(updateCartItem(item.product.id, item.count - 1))}
+                              className="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors"
+                            >
+                              <Minus className="w-3 h-3" />
+                            </button>
+                            <span className="w-6 text-center text-sm font-medium">{item.count}</span>
+                            <button 
+                              onClick={() => dispatch(updateCartItem(item.product.id, item.count + 1))}
+                              className="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors"
+                            >
+                              <Plus className="w-3 h-3" />
+                            </button>
+                          </div>
+                          <button 
+                            onClick={() => {
+                              dispatch(removeFromCart(item.product.id));
+                              toast.info('Ürün sepetten çıkarıldı');
+                            }}
+                            className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded transition-colors"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                    
+                    {/* Cart Footer */}
+                    <div className="p-4 border-t border-gray-100 bg-gray-50">
+                      <div className="flex justify-between items-center mb-3">
+                        <span className="text-gray-600">Toplam:</span>
+                        <span className="text-lg font-bold text-slate-800">
+                          ₺{cart.reduce((total, item) => total + (item.product.price * item.count), 0).toFixed(2)}
+                        </span>
+                      </div>
+                      <Link 
+                        to="/cart"
+                        onClick={() => setIsCartOpen(false)}
+                        className="block w-full py-2.5 bg-gradient-to-r from-[#23A6F0] to-[#1e8ed8] text-white text-center rounded-lg font-medium hover:from-[#1e8ed8] hover:to-[#1a7fc4] transition-all shadow-sm"
+                      >
+                        Sepete Git
+                      </Link>
+                    </div>
+                  </>
+                )}
+              </div>
             )}
-          </Link>
+          </div>
           
           <div className="w-px h-6 bg-gray-200 mx-2"></div>
           
@@ -548,13 +641,14 @@ const Header = () => {
       )}
       
       {/* Overlay for closing menus */}
-      {(isUserMenuOpen || isShopMenuOpen || searchOpen) && (
+      {(isUserMenuOpen || isShopMenuOpen || searchOpen || isCartOpen) && (
         <div 
           className="fixed inset-0 z-30 bg-black/5" 
           onClick={() => {
             setIsUserMenuOpen(false);
             setIsShopMenuOpen(false);
             setSearchOpen(false);
+            setIsCartOpen(false);
           }}
         />
       )}
