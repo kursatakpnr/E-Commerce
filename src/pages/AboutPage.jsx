@@ -36,7 +36,7 @@ const AboutPage = () => {
                 <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-pink-200 rounded-full -z-10"></div>
                 <div className="absolute top-1/2 left-1/4 w-8 h-8 bg-purple-300 rounded-full -z-10"></div>
                 <img 
-                  src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=500&fit=crop"
+                  src="/src/assets/about-hero.jpg"
                   alt="About Us"
                   className="w-full h-[300px] md:h-[400px] lg:h-[500px] object-cover rounded-lg relative z-10"
                 />
@@ -87,7 +87,7 @@ const AboutPage = () => {
         <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 xl:px-24">
           <div className="relative rounded-2xl overflow-hidden">
             <img 
-              src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1200&h=600&fit=crop"
+              src="/src/assets/about-hero.jpg"
               alt="Video thumbnail"
               className="w-full h-[300px] md:h-[400px] lg:h-[500px] object-cover"
             />
@@ -116,9 +116,9 @@ const AboutPage = () => {
           {/* Team Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
             {[
-              { image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face', name: 'Ahmet Yılmaz', role: 'Genel Müdür' },
-              { image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop&crop=face', name: 'Ayşe Demir', role: 'Pazarlama Müdürü' },
-              { image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face', name: 'Mehmet Kaya', role: 'Satış Müdürü' }
+              { image: '/src/assets/about-team-1.jpg', name: 'Ahmet Yılmaz', role: 'Genel Müdür' },
+              { image: '/src/assets/about-team-2.jpg', name: 'Ayşe Demir', role: 'Pazarlama Müdürü' },
+              { image: '/src/assets/about-team-3.jpg', name: 'Mehmet Kaya', role: 'Satış Müdürü' }
             ].map((member, index) => (
               <div key={index} className="text-center">
                 <img 
@@ -179,7 +179,7 @@ const AboutPage = () => {
           {/* Right - Image */}
           <div className="w-full lg:w-1/2">
             <img 
-              src="https://images.unsplash.com/photo-1560264280-88b68371db39?w=800&h=500&fit=crop"
+              src="/src/assets/about-contact.jpg"
               alt="Work with us"
               className="w-full h-[300px] md:h-[400px] lg:h-full object-cover"
             />

@@ -47,20 +47,18 @@ export let registeredUsers = [...mockUsers];
 // Mock Categories - Yemek/Market Kategorileri
 export const mockCategories = [
   // Taze Gıda Kategorileri
-  { id: 1, code: 'meyve-sebze', title: 'Meyve & Sebze', img: 'https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=300&h=400&fit=crop', rating: 4.9, category_type: 'taze', product_count: 85 },
-  { id: 2, code: 'et-tavuk', title: 'Et & Tavuk', img: 'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=300&h=400&fit=crop', rating: 4.85, category_type: 'taze', product_count: 45 },
-  { id: 3, code: 'sut-urunleri', title: 'Süt Ürünleri', img: 'https://images.unsplash.com/photo-1628088062854-d1870b4553da?w=300&h=400&fit=crop', rating: 4.8, category_type: 'taze', product_count: 62 },
-  { id: 4, code: 'firin', title: 'Fırın & Unlu Mamul', img: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=300&h=400&fit=crop', rating: 4.75, category_type: 'taze', product_count: 38 },
-  { id: 5, code: 'deniz-urunleri', title: 'Deniz Ürünleri', img: 'https://images.unsplash.com/photo-1510130387422-82bed34b37e9?w=300&h=400&fit=crop', rating: 4.7, category_type: 'taze', product_count: 28 },
-  { id: 6, code: 'sarkuteri', title: 'Şarküteri', img: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=300&h=400&fit=crop', rating: 4.65, category_type: 'taze', product_count: 34 },
+  { id: 1, code: 'meyve-sebze', title: 'Meyve & Sebze', img: '/src/assets/category-meyve-sebze.jpg', rating: 4.9, category_type: 'taze', product_count: 85 },
+  { id: 2, code: 'et-tavuk', title: 'Et & Tavuk', img: '/src/assets/category-et-tavuk.jpg', rating: 4.85, category_type: 'taze', product_count: 45 },
+  { id: 3, code: 'sut-urunleri', title: 'Süt Ürünleri', img: '/src/assets/category-sut-urunleri.jpg', rating: 4.8, category_type: 'taze', product_count: 62 },
+  { id: 4, code: 'firin', title: 'Fırın & Unlu Mamul', img: '/src/assets/category-firin.jpg', rating: 4.75, category_type: 'taze', product_count: 38 },
+  { id: 5, code: 'deniz-urunleri', title: 'Deniz Ürünleri', img: '/src/assets/category-deniz-urunleri.jpg', rating: 4.7, category_type: 'taze', product_count: 28 },
+  { id: 6, code: 'sarkuteri', title: 'Şarküteri', img: '/src/assets/category-sarkuteri.jpg', rating: 4.65, category_type: 'taze', product_count: 34 },
   
   // Paketli Gıda Kategorileri
-  { id: 7, code: 'icecekler', title: 'İçecekler', img: 'https://images.unsplash.com/photo-1534353473418-4cfa6c56fd38?w=300&h=400&fit=crop', rating: 4.6, category_type: 'paketli', product_count: 95 },
-  { id: 8, code: 'atistirmalik', title: 'Atıştırmalıklar', img: 'https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=300&h=400&fit=crop', rating: 4.55, category_type: 'paketli', product_count: 72 },
-  { id: 9, code: 'kahvaltilik', title: 'Kahvaltılıklar', img: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=300&h=400&fit=crop', rating: 4.5, category_type: 'paketli', product_count: 56 },
-  { id: 10, code: 'dondurulmus', title: 'Dondurulmuş Gıda', img: 'https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=300&h=400&fit=crop', rating: 4.45, category_type: 'paketli', product_count: 48 },
-  { id: 11, code: 'temel-gida', title: 'Temel Gıda', img: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=300&h=400&fit=crop', rating: 4.4, category_type: 'paketli', product_count: 67 },
-  { id: 12, code: 'temizlik', title: 'Temizlik & Kişisel Bakım', img: 'https://images.unsplash.com/photo-1583947215259-38e31be8751f?w=300&h=400&fit=crop', rating: 4.35, category_type: 'ev', product_count: 89 }
+  { id: 7, code: 'icecekler', title: 'İçecekler', img: '/src/assets/category-icecekler.jpg', rating: 4.6, category_type: 'paketli', product_count: 95 },
+  { id: 8, code: 'atistirmalik', title: 'Atıştırmalıklar', img: '/src/assets/category-atistirmalik.jpg', rating: 4.55, category_type: 'paketli', product_count: 72 },
+  { id: 9, code: 'kahvaltilik', title: 'Kahvaltılıklar', img: '/src/assets/category-kahvaltilik.jpg', rating: 4.5, category_type: 'paketli', product_count: 56 },
+  { id: 10, code: 'dondurulmus', title: 'Dondurulmuş Gıda', img: '/src/assets/category-dondurulmus.jpg', rating: 4.45, category_type: 'paketli', product_count: 48 }
 ];
 
 // Mock Products
@@ -192,19 +190,19 @@ export const mockProducts = [
     price: 79.99,
     stock: 100,
     store_id: 1,
-    category_id: 11,
+    category_id: 9,
     rating: 4.5,
     sell_count: 175,
     images: [{ url: '/src/assets/best-seller-left.jpg' }]
   },
   {
     id: 12,
-    name: 'Çamaşır Deterjanı',
-    description: 'Konsantre sıvı deterjan 3L',
-    price: 119.99,
-    stock: 90,
+    name: 'Makarna',
+    description: 'İtalyan usulü spagetti makarna',
+    price: 29.99,
+    stock: 150,
     store_id: 1,
-    category_id: 12,
+    category_id: 10,
     rating: 4.3,
     sell_count: 390,
     images: [{ url: '/src/assets/best-seller-right.jpg' }]

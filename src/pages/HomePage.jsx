@@ -99,7 +99,7 @@ const HomePage = () => {
           </div>
           {/* Slide 2 */}
           <div className="relative w-full h-[500px] md:h-[600px] text-white overflow-hidden">
-             <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1974&auto=format&fit=crop')] bg-cover bg-center"></div>
+             <div className="absolute inset-0 bg-[url('/src/assets/home-categories-bg.jpg')] bg-cover bg-center"></div>
              <div className="absolute inset-0 bg-green-700/60"></div>
              <div className="relative z-10 h-full flex flex-col items-center justify-center text-center gap-6 px-8">
                 <h1 className="font-bold text-4xl md:text-5xl lg:text-6xl">SEBZE & MEYVE</h1>

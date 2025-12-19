@@ -70,7 +70,7 @@ const TeamPage = () => {
             {/* Large Image */}
             <div className="col-span-2 row-span-2">
               <img 
-                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=800&fit=crop"
+                src="/src/assets/team-main.jpg"
                 alt="Team collaboration"
                 className="w-full h-full object-cover"
               />
@@ -78,28 +78,28 @@ const TeamPage = () => {
             {/* Small Images */}
             <div className="col-span-1">
               <img 
-                src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=400&h=300&fit=crop"
+                src="/src/assets/team-work-1.jpg"
                 alt="Team meeting"
                 className="w-full h-full object-cover"
               />
             </div>
             <div className="col-span-1">
               <img 
-                src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=400&h=300&fit=crop"
+                src="/src/assets/team-work-2.jpg"
                 alt="Team member"
                 className="w-full h-full object-cover"
               />
             </div>
             <div className="col-span-1">
               <img 
-                src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop"
+                src="/src/assets/team-work-3.jpg"
                 alt="Teamwork"
                 className="w-full h-full object-cover"
               />
             </div>
             <div className="col-span-1">
               <img 
-                src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=400&h=300&fit=crop"
+                src="/src/assets/team-work-4.jpg"
                 alt="Office work"
                 className="w-full h-full object-cover"
               />

@@ -72,7 +72,7 @@ const ContactPage = () => {
                 <div className="absolute -top-4 -left-4 w-20 h-20 bg-pink-200 rounded-full -z-10"></div>
                 <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-pink-200 rounded-full -z-10"></div>
                 <img 
-                  src="https://images.unsplash.com/photo-1534536281715-e28d76689b4d?w=600&h=500&fit=crop"
+                  src="/src/assets/contact-hero.jpg"
                   alt="Contact Us"
                   className="w-full h-[300px] md:h-[400px] lg:h-[500px] object-cover rounded-lg"
                 />
@@ -112,8 +112,8 @@ const ContactPage = () => {
               <div className="w-16 h-16 bg-[#23A6F0] rounded-full flex items-center justify-center mx-auto mb-6">
                 <MapPin className="w-8 h-8 text-white" />
               </div>
-              <p className="text-sm text-gray-300 mb-2">İstanbul, Türkiye</p>
-              <p className="text-sm text-gray-300 mb-6">Levent Plaza, Kat 5</p>
+              <p className="text-sm text-gray-300 mb-2">Yıldız Teknopark, Yıldız Teknik Üniversitesi</p>
+              <p className="text-sm text-gray-300 mb-6">Davutpaşa Kampüsü, İstanbul 34220</p>
               <p className="text-base font-bold text-white mb-4">Adres Bilgisi</p>
               <button className="border-2 border-[#23A6F0] text-[#23A6F0] px-6 py-3 rounded-full font-bold text-sm hover:bg-[#23A6F0] hover:text-white transition-colors">
                 Yol Tarifi Al
@@ -250,7 +250,7 @@ const ContactPage = () => {
       <section className="bg-white">
         <div className="w-full h-[300px] md:h-[400px] bg-gray-200 relative">
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d387193.30596073366!2d-74.25986652089301!3d40.69714941680757!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2s!4v1639581234567!5m2!1sen!2s"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3011.6504900320706!2d28.88847731541466!3d41.02067197929855!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cabb7abf0f0c5d%3A0xdec6da5a1e9c3a5e!2zWcSxbGTEsXogVGVrbm9wYXJr!5e0!3m2!1str!2str!4v1703001234567!5m2!1str!2str"
             width="100%"
             height="100%"
             style={{ border: 0 }}
