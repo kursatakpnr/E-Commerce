@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Phone, Mail, MapPin, Send, Twitter, Facebook, Instagram, Linkedin } from 'lucide-react';
+import contactHero from '../assets/contact-hero.jpg';
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -72,7 +73,7 @@ const ContactPage = () => {
                 <div className="absolute -top-4 -left-4 w-20 h-20 bg-pink-200 rounded-full -z-10"></div>
                 <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-pink-200 rounded-full -z-10"></div>
                 <img 
-                  src="/src/assets/contact-hero.jpg"
+                  src={contactHero}
                   alt="Contact Us"
                   className="w-full h-[300px] md:h-[400px] lg:h-[500px] object-cover rounded-lg"
                 />

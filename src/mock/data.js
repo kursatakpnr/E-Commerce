@@ -1,5 +1,33 @@
 // Mock Data - Backend kullanılmadan simülasyon için
 
+// Görsel importları
+import categoryMeyveSebze from '../assets/category-meyve-sebze.jpg';
+import categoryEtTavuk from '../assets/category-et-tavuk.jpg';
+import categorySutUrunleri from '../assets/category-sut-urunleri.jpg';
+import categoryFirin from '../assets/category-firin.jpg';
+import categoryDenizUrunleri from '../assets/category-deniz-urunleri.jpg';
+import categorySarkuteri from '../assets/category-sarkuteri.jpg';
+import categoryIcecekler from '../assets/category-icecekler.jpg';
+import categoryAtistirmalik from '../assets/category-atistirmalik.jpg';
+import categoryKahvaltilik from '../assets/category-kahvaltilik.jpg';
+import categoryDondurulmus from '../assets/category-dondurulmus.jpg';
+import card1 from '../assets/card-1.jpg';
+import card2 from '../assets/card-2.jpg';
+import card3 from '../assets/card-3.png';
+import best1 from '../assets/best-1.png';
+import best2 from '../assets/best-2.jpg';
+import best3 from '../assets/best-3.jpg';
+import best4 from '../assets/best-4.jpg';
+import featured1 from '../assets/featured-1.jpg';
+import featured2 from '../assets/featured-2.jpg';
+import featured3 from '../assets/featured-3.jpg';
+import bestSellerLeft from '../assets/best-seller-left.jpg';
+import bestSellerRight from '../assets/best-seller-right.jpg';
+import mostPopularLeft from '../assets/most-popular-left.jpg';
+import mostPopularRight from '../assets/most-popular-right.jpg';
+import mostPopularLeft2 from '../assets/most-popular-left-2.jpg';
+import mostPopularRight2 from '../assets/most-popular-right-2.jpg';
+
 // Roller
 export const mockRoles = [
   { id: 1, code: 'customer', name: 'Müşteri' },
@@ -47,18 +75,18 @@ export let registeredUsers = [...mockUsers];
 // Mock Categories - Yemek/Market Kategorileri
 export const mockCategories = [
   // Taze Gıda Kategorileri
-  { id: 1, code: 'meyve-sebze', title: 'Meyve & Sebze', img: '/src/assets/category-meyve-sebze.jpg', rating: 4.9, category_type: 'taze', product_count: 85 },
-  { id: 2, code: 'et-tavuk', title: 'Et & Tavuk', img: '/src/assets/category-et-tavuk.jpg', rating: 4.85, category_type: 'taze', product_count: 45 },
-  { id: 3, code: 'sut-urunleri', title: 'Süt Ürünleri', img: '/src/assets/category-sut-urunleri.jpg', rating: 4.8, category_type: 'taze', product_count: 62 },
-  { id: 4, code: 'firin', title: 'Fırın & Unlu Mamul', img: '/src/assets/category-firin.jpg', rating: 4.75, category_type: 'taze', product_count: 38 },
-  { id: 5, code: 'deniz-urunleri', title: 'Deniz Ürünleri', img: '/src/assets/category-deniz-urunleri.jpg', rating: 4.7, category_type: 'taze', product_count: 28 },
-  { id: 6, code: 'sarkuteri', title: 'Şarküteri', img: '/src/assets/category-sarkuteri.jpg', rating: 4.65, category_type: 'taze', product_count: 34 },
+  { id: 1, code: 'meyve-sebze', title: 'Meyve & Sebze', img: categoryMeyveSebze, rating: 4.9, category_type: 'taze', product_count: 85 },
+  { id: 2, code: 'et-tavuk', title: 'Et & Tavuk', img: categoryEtTavuk, rating: 4.85, category_type: 'taze', product_count: 45 },
+  { id: 3, code: 'sut-urunleri', title: 'Süt Ürünleri', img: categorySutUrunleri, rating: 4.8, category_type: 'taze', product_count: 62 },
+  { id: 4, code: 'firin', title: 'Fırın & Unlu Mamul', img: categoryFirin, rating: 4.75, category_type: 'taze', product_count: 38 },
+  { id: 5, code: 'deniz-urunleri', title: 'Deniz Ürünleri', img: categoryDenizUrunleri, rating: 4.7, category_type: 'taze', product_count: 28 },
+  { id: 6, code: 'sarkuteri', title: 'Şarküteri', img: categorySarkuteri, rating: 4.65, category_type: 'taze', product_count: 34 },
   
   // Paketli Gıda Kategorileri
-  { id: 7, code: 'icecekler', title: 'İçecekler', img: '/src/assets/category-icecekler.jpg', rating: 4.6, category_type: 'paketli', product_count: 95 },
-  { id: 8, code: 'atistirmalik', title: 'Atıştırmalıklar', img: '/src/assets/category-atistirmalik.jpg', rating: 4.55, category_type: 'paketli', product_count: 72 },
-  { id: 9, code: 'kahvaltilik', title: 'Kahvaltılıklar', img: '/src/assets/category-kahvaltilik.jpg', rating: 4.5, category_type: 'paketli', product_count: 56 },
-  { id: 10, code: 'dondurulmus', title: 'Dondurulmuş Gıda', img: '/src/assets/category-dondurulmus.jpg', rating: 4.45, category_type: 'paketli', product_count: 48 }
+  { id: 7, code: 'icecekler', title: 'İçecekler', img: categoryIcecekler, rating: 4.6, category_type: 'paketli', product_count: 95 },
+  { id: 8, code: 'atistirmalik', title: 'Atıştırmalıklar', img: categoryAtistirmalik, rating: 4.55, category_type: 'paketli', product_count: 72 },
+  { id: 9, code: 'kahvaltilik', title: 'Kahvaltılıklar', img: categoryKahvaltilik, rating: 4.5, category_type: 'paketli', product_count: 56 },
+  { id: 10, code: 'dondurulmus', title: 'Dondurulmuş Gıda', img: categoryDondurulmus, rating: 4.45, category_type: 'paketli', product_count: 48 }
 ];
 
 // Mock Products
@@ -73,7 +101,7 @@ export const mockProducts = [
     category_id: 1,
     rating: 4.5,
     sell_count: 250,
-    images: [{ url: '/src/assets/card-1.jpg' }]
+    images: [{ url: card1 }]
   },
   {
     id: 2,
@@ -85,7 +113,7 @@ export const mockProducts = [
     category_id: 2,
     rating: 4.8,
     sell_count: 180,
-    images: [{ url: '/src/assets/card-2.jpg' }]
+    images: [{ url: card2 }]
   },
   {
     id: 3,
@@ -97,7 +125,7 @@ export const mockProducts = [
     category_id: 3,
     rating: 4.3,
     sell_count: 120,
-    images: [{ url: '/src/assets/card-3.png' }]
+    images: [{ url: card3 }]
   },
   {
     id: 4,
@@ -109,7 +137,7 @@ export const mockProducts = [
     category_id: 4,
     rating: 4.7,
     sell_count: 300,
-    images: [{ url: '/src/assets/best-1.png' }]
+    images: [{ url: best1 }]
   },
   {
     id: 5,
@@ -121,7 +149,7 @@ export const mockProducts = [
     category_id: 5,
     rating: 4.9,
     sell_count: 95,
-    images: [{ url: '/src/assets/best-2.jpg' }]
+    images: [{ url: best2 }]
   },
   {
     id: 6,
@@ -133,7 +161,7 @@ export const mockProducts = [
     category_id: 6,
     rating: 4.6,
     sell_count: 145,
-    images: [{ url: '/src/assets/best-3.jpg' }]
+    images: [{ url: best3 }]
   },
   {
     id: 7,
@@ -145,7 +173,7 @@ export const mockProducts = [
     category_id: 7,
     rating: 4.4,
     sell_count: 320,
-    images: [{ url: '/src/assets/best-4.jpg' }]
+    images: [{ url: best4 }]
   },
   {
     id: 8,
@@ -157,7 +185,7 @@ export const mockProducts = [
     category_id: 8,
     rating: 4.2,
     sell_count: 450,
-    images: [{ url: '/src/assets/featured-1.jpg' }]
+    images: [{ url: featured1 }]
   },
   {
     id: 9,
@@ -169,7 +197,7 @@ export const mockProducts = [
     category_id: 9,
     rating: 4.8,
     sell_count: 210,
-    images: [{ url: '/src/assets/featured-2.jpg' }]
+    images: [{ url: featured2 }]
   },
   {
     id: 10,
@@ -181,7 +209,7 @@ export const mockProducts = [
     category_id: 10,
     rating: 4.1,
     sell_count: 280,
-    images: [{ url: '/src/assets/featured-3.jpg' }]
+    images: [{ url: featured3 }]
   },
   {
     id: 11,
@@ -193,7 +221,7 @@ export const mockProducts = [
     category_id: 9,
     rating: 4.5,
     sell_count: 175,
-    images: [{ url: '/src/assets/best-seller-left.jpg' }]
+    images: [{ url: bestSellerLeft }]
   },
   {
     id: 12,
@@ -205,7 +233,7 @@ export const mockProducts = [
     category_id: 10,
     rating: 4.3,
     sell_count: 390,
-    images: [{ url: '/src/assets/best-seller-right.jpg' }]
+    images: [{ url: bestSellerRight }]
   },
   {
     id: 13,
@@ -217,7 +245,7 @@ export const mockProducts = [
     category_id: 1,
     rating: 4.4,
     sell_count: 180,
-    images: [{ url: '/src/assets/most-popular-left.jpg' }]
+    images: [{ url: mostPopularLeft }]
   },
   {
     id: 14,
@@ -229,7 +257,7 @@ export const mockProducts = [
     category_id: 2,
     rating: 4.6,
     sell_count: 220,
-    images: [{ url: '/src/assets/most-popular-right.jpg' }]
+    images: [{ url: mostPopularRight }]
   },
   {
     id: 15,
@@ -241,7 +269,7 @@ export const mockProducts = [
     category_id: 3,
     rating: 4.5,
     sell_count: 550,
-    images: [{ url: '/src/assets/most-popular-left-2.jpg' }]
+    images: [{ url: mostPopularLeft2 }]
   },
   {
     id: 16,
@@ -253,7 +281,7 @@ export const mockProducts = [
     category_id: 4,
     rating: 4.7,
     sell_count: 420,
-    images: [{ url: '/src/assets/most-popular-right-2.jpg' }]
+    images: [{ url: mostPopularRight2 }]
   },
   {
     id: 17,
@@ -265,7 +293,7 @@ export const mockProducts = [
     category_id: 5,
     rating: 4.8,
     sell_count: 85,
-    images: [{ url: '/src/assets/card-1.jpg' }]
+    images: [{ url: card1 }]
   },
   {
     id: 18,
@@ -277,7 +305,7 @@ export const mockProducts = [
     category_id: 6,
     rating: 4.5,
     sell_count: 310,
-    images: [{ url: '/src/assets/card-2.jpg' }]
+    images: [{ url: card2 }]
   },
   {
     id: 19,
@@ -289,7 +317,7 @@ export const mockProducts = [
     category_id: 7,
     rating: 4.3,
     sell_count: 490,
-    images: [{ url: '/src/assets/card-3.png' }]
+    images: [{ url: card3 }]
   },
   {
     id: 20,
@@ -301,7 +329,7 @@ export const mockProducts = [
     category_id: 8,
     rating: 4.7,
     sell_count: 380,
-    images: [{ url: '/src/assets/best-1.png' }]
+    images: [{ url: best1 }]
   }
 ];
 

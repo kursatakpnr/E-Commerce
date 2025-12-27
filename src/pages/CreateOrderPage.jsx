@@ -14,6 +14,7 @@ import {
   deleteCreditCardAction
 } from '../store/actions';
 import { getCities } from '../mock/mockApi';
+import fallbackImage from '../assets/card-1.jpg';
 
 const CreateOrderPage = () => {
   const dispatch = useDispatch();
@@ -731,7 +732,7 @@ const CreateOrderPage = () => {
                 {selectedItems.map(item => (
                   <div key={item.product.id} className="flex items-center gap-3">
                     <img
-                      src={item.product.images?.[0]?.url || '/src/assets/card-1.jpg'}
+                      src={item.product.images?.[0]?.url || fallbackImage}
                       alt={item.product.name}
                       className="w-12 h-12 object-cover rounded"
                     />

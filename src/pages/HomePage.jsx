@@ -23,6 +23,7 @@ import best4 from '../assets/best-4.jpg';
 import featured1 from '../assets/featured-1.jpg';
 import featured2 from '../assets/featured-2.jpg';
 import featured3 from '../assets/featured-3.jpg';
+import homeCategoriesBg from '../assets/home-categories-bg.jpg';
 
 // Custom Arrow Components
 const PrevArrow = ({ onClick }) => (
@@ -99,7 +100,7 @@ const HomePage = () => {
           </div>
           {/* Slide 2 */}
           <div className="relative w-full h-[500px] md:h-[600px] text-white overflow-hidden">
-             <div className="absolute inset-0 bg-[url('/src/assets/home-categories-bg.jpg')] bg-cover bg-center"></div>
+             <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${homeCategoriesBg})` }}></div>
              <div className="absolute inset-0 bg-green-700/60"></div>
              <div className="relative z-10 h-full flex flex-col items-center justify-center text-center gap-6 px-8">
                 <h1 className="font-bold text-4xl md:text-5xl lg:text-6xl">SEBZE & MEYVE</h1>

@@ -7,6 +7,7 @@ import { fetchProductById, fetchCategories, FETCH_STATES } from '../store/action
 import { addToCart } from '../store/actions/shoppingCartActions';
 import { toast } from 'react-toastify';
 import ProductCard from '../components/ProductCard';
+import fallbackImage from '../assets/card-1.jpg';
 
 const ProductDetailPage = () => {
   const { productId, gender, categoryName, categoryId } = useParams();
@@ -61,7 +62,7 @@ const ProductDetailPage = () => {
     const product = {
       id: currentProduct.id,
       name: currentProduct.name,
-      image: currentProduct.images?.[0]?.url || '/src/assets/card-1.jpg',
+      image: currentProduct.images?.[0]?.url || fallbackImage,
       price: currentProduct.price,
       originalPrice: currentProduct.price * 1.2,
       department: productCategory?.title || 'Ürün',
@@ -89,7 +90,7 @@ const ProductDetailPage = () => {
   // Ürün görselleri (varsayılan görsel yoksa placeholder)
   const productImages = currentProduct.images?.length > 0 
     ? currentProduct.images.map(img => img.url)
-    : ['/src/assets/card-1.jpg'];
+    : [fallbackImage];
 
   return (
     <div className="flex flex-col">
@@ -343,7 +344,7 @@ const ProductDetailPage = () => {
                 <ProductCard 
                   key={relatedProduct.id}
                   id={relatedProduct.id}
-                  image={relatedProduct.images?.[0]?.url || '/src/assets/card-1.jpg'}
+                  image={relatedProduct.images?.[0]?.url || fallbackImage}
                   title={relatedProduct.name}
                   department={relatedProduct.description}
                   originalPrice={`₺${(relatedProduct.price * 1.2).toFixed(2)}`}

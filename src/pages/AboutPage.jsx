@@ -1,5 +1,10 @@
 import React from 'react';
 import { Play } from 'lucide-react';
+import aboutHero from '../assets/about-hero.jpg';
+import aboutTeam1 from '../assets/about-team-1.jpg';
+import aboutTeam2 from '../assets/about-team-2.jpg';
+import aboutTeam3 from '../assets/about-team-3.jpg';
+import aboutContact from '../assets/about-contact.jpg';
 
 const AboutPage = () => {
   const stats = [
@@ -36,7 +41,7 @@ const AboutPage = () => {
                 <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-pink-200 rounded-full -z-10"></div>
                 <div className="absolute top-1/2 left-1/4 w-8 h-8 bg-purple-300 rounded-full -z-10"></div>
                 <img 
-                  src="/src/assets/about-hero.jpg"
+                  src={aboutHero}
                   alt="About Us"
                   className="w-full h-[300px] md:h-[400px] lg:h-[500px] object-cover rounded-lg relative z-10"
                 />
@@ -87,7 +92,7 @@ const AboutPage = () => {
         <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 xl:px-24">
           <div className="relative rounded-2xl overflow-hidden">
             <img 
-              src="/src/assets/about-hero.jpg"
+              src={aboutHero}
               alt="Video thumbnail"
               className="w-full h-[300px] md:h-[400px] lg:h-[500px] object-cover"
             />
@@ -116,9 +121,9 @@ const AboutPage = () => {
           {/* Team Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
             {[
-              { image: '/src/assets/about-team-1.jpg', name: 'Ahmet Yılmaz', role: 'Genel Müdür' },
-              { image: '/src/assets/about-team-2.jpg', name: 'Ayşe Demir', role: 'Pazarlama Müdürü' },
-              { image: '/src/assets/about-team-3.jpg', name: 'Mehmet Kaya', role: 'Satış Müdürü' }
+              { image: aboutTeam1, name: 'Ahmet Yılmaz', role: 'Genel Müdür' },
+              { image: aboutTeam2, name: 'Ayşe Demir', role: 'Pazarlama Müdürü' },
+              { image: aboutTeam3, name: 'Mehmet Kaya', role: 'Satış Müdürü' }
             ].map((member, index) => (
               <div key={index} className="text-center">
                 <img 
@@ -179,7 +184,7 @@ const AboutPage = () => {
           {/* Right - Image */}
           <div className="w-full lg:w-1/2">
             <img 
-              src="/src/assets/about-contact.jpg"
+              src={aboutContact}
               alt="Work with us"
               className="w-full h-[300px] md:h-[400px] lg:h-full object-cover"
             />

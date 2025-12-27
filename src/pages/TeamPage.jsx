@@ -5,6 +5,11 @@ import { Link } from 'react-router-dom';
 import member1 from '../assets/member-1.jpg';
 import member2 from '../assets/member-2.jpg';
 import member3 from '../assets/member-3.jpg';
+import teamMain from '../assets/team-main.jpg';
+import teamWork1 from '../assets/team-work-1.jpg';
+import teamWork2 from '../assets/team-work-2.jpg';
+import teamWork3 from '../assets/team-work-3.jpg';
+import teamWork4 from '../assets/team-work-4.jpg';
 
 const TeamPage = () => {
   const teamMembers = [
@@ -70,7 +75,7 @@ const TeamPage = () => {
             {/* Large Image */}
             <div className="col-span-2 row-span-2">
               <img 
-                src="/src/assets/team-main.jpg"
+                src={teamMain}
                 alt="Team collaboration"
                 className="w-full h-full object-cover"
               />
@@ -78,28 +83,28 @@ const TeamPage = () => {
             {/* Small Images */}
             <div className="col-span-1">
               <img 
-                src="/src/assets/team-work-1.jpg"
+                src={teamWork1}
                 alt="Team meeting"
                 className="w-full h-full object-cover"
               />
             </div>
             <div className="col-span-1">
               <img 
-                src="/src/assets/team-work-2.jpg"
+                src={teamWork2}
                 alt="Team member"
                 className="w-full h-full object-cover"
               />
             </div>
             <div className="col-span-1">
               <img 
-                src="/src/assets/team-work-3.jpg"
+                src={teamWork3}
                 alt="Teamwork"
                 className="w-full h-full object-cover"
               />
             </div>
             <div className="col-span-1">
               <img 
-                src="/src/assets/team-work-4.jpg"
+                src={teamWork4}
                 alt="Office work"
                 className="w-full h-full object-cover"
               />
